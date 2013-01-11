@@ -52,13 +52,12 @@ class UrlTest extends PHPUnit_Framework_TestCase
             ->set('param1', 'value1')
             ->set('param2', 'value2');
 
-        $this->assertEquals('https://jwage.com/about/me?param1=value1&param2=value2#/fragment1/fragment2?param1=value1&param2=value2', (string) $url);
+        $this->assertEquals('https://jwage.com:443/about/me?param1=value1&param2=value2#/fragment1/fragment2?param1=value1&param2=value2', (string) $url);
     }
 
     public function testJoin()
     {
-        $url = new Url('http://jwage.com');
-        $url->join('about?param=value#fragment');
+        $url = new Url('http://jwage.com/about?param=value#fragment');
         $this->assertEquals('http://jwage.com/about?param=value#fragment', (string) $url);
         $url->join(new Url('http://about.me/jwage'));
         $this->assertEquals('http://about.me/jwage?param=value#fragment', (string) $url);
@@ -180,5 +179,31 @@ class UrlTest extends PHPUnit_Framework_TestCase
     {
         $url = new Url('http://jwage.com/about?query=value');
         $this->assertEquals('/about?query=value', $url->resource);
+    }
+
+    public function testPort()
+    {
+        $url = new Url('http://jwage.com:443');
+        $this->assertEquals('443', $url->port);
+        $this->assertEquals('http://jwage.com:443/', (string) $url);
+    }
+
+    public function testAuth()
+    {
+        $url = new Url('http://user:pass@jwage.com');
+        $this->assertEquals('user', $url->user);
+        $this->assertEquals('pass', $url->pass);
+        $this->assertEquals('http://user:pass@jwage.com/', (string) $url);
+
+        $url = new Url('http://user:@jwage.com');
+        $this->assertEquals('user', $url->user);
+        $this->assertEquals(null, $url->pass);
+        $this->assertEquals('http://user@jwage.com/', (string) $url);
+
+        $url = new Url('http://user@jwage.com');
+        $this->assertEquals('user', $url->user);
+        $this->assertEquals(null, $url->pass);
+        $this->assertEquals('http://user@jwage.com/', (string) $url);
+
     }
 }

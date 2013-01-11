@@ -31,16 +31,7 @@ class Url extends AbstractPart
     /**
      * @var array
      */
-    protected $data = array(
-        'scheme'   => null,
-        'host'     => null,
-        'port'     => null,
-        'user'     => null,
-        'pass'     => null,
-        'path'     => null,
-        'query'    => null,
-        'fragment' => null
-    );
+    protected $data = array();
 
     /**
      * Construct a new Url instance.
@@ -97,7 +88,12 @@ class Url extends AbstractPart
     public function join($url)
     {
         $this->initialize();
-        $this->data = array_merge($this->data, $this->getParser()->parseUrl($url));
+        $result = $this->getParser()->parseUrl($url);
+        foreach ($result as $key => $value) {
+            if ($value !== null) {
+                $this->data[$key] = $value;
+            }
+        }
 
         if (!$this->data['path'] instanceof Path) {
             $this->data['path'] = new Path($this->data['path']);
@@ -153,14 +149,9 @@ class Url extends AbstractPart
     public function getUrl()
     {
         $this->initialize();
-
-        if (!function_exists('http_build_url')) {
-            throw new \RuntimeException('http_build_url() function must exist. pecl install pecl_http');
-        }
-
-        return http_build_url(array_map(function($value) {
+        return self::httpBuildUrl(array_map(function($value) {
             return (string) $value;
-        }, array_filter($this->data, function($value) { return $value; })));
+        }, $this->data));
     }
 
     /**
@@ -198,11 +189,32 @@ class Url extends AbstractPart
      */
     protected function doInitialize()
     {
-        $this->data = array_merge($this->data, $this->getParser()->parseUrl($this->url));
+        $this->data = $this->getParser()->parseUrl($this->url);
 
         $this->data['path'] = new Path($this->data['path']);
         $this->data['query'] = new Query($this->data['query']);
         $this->data['fragment'] = new Fragment($this->data['fragment']);
+    }
+
+    /**
+     * Reconstructs a string URL from an array of parts.
+     *
+     * @param array $parts
+     * @return string $url
+     */
+    private static function httpBuildUrl(array $parts)
+    {
+        $parts['path'] = ltrim($parts['path'], '/');
+
+        return sprintf('%s://%s%s%s/%s%s%s',
+            $parts['scheme'],
+            $parts['user'] ? sprintf('%s%s@', $parts['user'], $parts['pass'] ? sprintf(':%s', $parts['pass']) : '') : '',
+            $parts['host'],
+            $parts['port'] ? sprintf(':%d', $parts['port']) : '',
+            $parts['path'] ? $parts['path'] : '',
+            $parts['query'] ? '?'.$parts['query'] : '',
+            $parts['fragment'] ? '#'.$parts['fragment'] : ''
+        );
     }
 
     /**
