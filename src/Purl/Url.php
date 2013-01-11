@@ -56,6 +56,25 @@ class Url extends AbstractPart
     }
 
     /**
+     * Extracts urls from a string of text.
+     *
+     * @param string $string
+     * @return array $urls
+     */
+    public static function extract($string)
+    {
+        $regex = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+
+        preg_match_all($regex, $string, $matches);
+        $urls = array();
+        foreach ($matches[0] as $url) {
+            $urls[] = self::parse($url);
+        }
+
+        return $urls;
+    }
+
+    /**
      * Gets the ParserInterface instance used to parse this Url instance.
      *
      * @return ParserInterface

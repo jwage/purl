@@ -204,6 +204,16 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('user', $url->user);
         $this->assertEquals(null, $url->pass);
         $this->assertEquals('http://user@jwage.com/', (string) $url);
+    }
 
+    public function testExtract()
+    {
+        $urls = Url::extract("test\nmore test https://google.com ftp://jwage.com ftps://jwage.com http://google.com\ntesting this out http://jwage.com more text");
+        $this->assertEquals(5, count($urls));
+        $this->assertEquals('https://google.com/', (string) $urls[0]);
+        $this->assertEquals('ftp://jwage.com/', (string) $urls[1]);
+        $this->assertEquals('ftps://jwage.com/', (string) $urls[2]);
+        $this->assertEquals('http://google.com/', (string) $urls[3]);
+        $this->assertEquals('http://jwage.com/', (string) $urls[4]);
     }
 }
