@@ -3,7 +3,7 @@ Purl
 
 Purl is a simple Object Oriented URL manipulation library for PHP 5.3+
 
-[![Build Status](https://secure.travis-ci.org/jwage/Purl.png?branch=master)](http://travis-ci.org/jwage/Purl)
+[![Build Status](https://secure.travis-ci.org/jwage/purl.png?branch=master)](http://travis-ci.org/jwage/purl)
 
 Using Purl
 ----------
