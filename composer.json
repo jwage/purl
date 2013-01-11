@@ -1,0 +1,8 @@
+{
+    "autoload": {
+        "psr-0": {"Purl": "src/"}
+    },
+    "require": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}
