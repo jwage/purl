@@ -11,8 +11,7 @@
     "autoload": {
         "psr-0": {"Purl": "src/"}
     },
-    "require-dev": {
-    	"php": ">=5.3.0",
-        "phpunit/phpunit": "3.7.*"
+    "require": {
+    	"php": ">=5.3.0"
     }
 }
