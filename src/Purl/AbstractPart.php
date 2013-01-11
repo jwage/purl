@@ -114,7 +114,7 @@ abstract class AbstractPart implements \ArrayAccess
     }
 
     /**
-     * Remove data from this part by k ey.
+     * Remove data from this part by key.
      */
     public function remove($key)
     {
