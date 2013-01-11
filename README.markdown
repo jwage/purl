@@ -30,7 +30,7 @@ One benefit of using this method is you can chain methods together after creatin
 <?php
 
 $url = \Purl\Url::parse('http://jwage.com')
-	->set('schema', 'https')
+	->set('scheme', 'https')
 	->set('port', '443')
 	->set('user', 'jwage')
 	->set('pass', 'password')
