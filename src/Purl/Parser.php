@@ -36,7 +36,6 @@ class Parser implements ParserInterface
         'resource'  => null
     );
 
-
     public function parseUrl($url)
     {
         if ($url instanceof Url) {
