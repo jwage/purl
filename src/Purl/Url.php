@@ -153,6 +153,11 @@ class Url extends AbstractPart
     public function getUrl()
     {
         $this->initialize();
+
+        if (!function_exists('http_build_url')) {
+            throw new \RuntimeException('http_build_url() function must exist. pecl install pecl_http');
+        }
+
         return http_build_url(array_map(function($value) {
             return (string) $value;
         }, array_filter($this->data, function($value) { return $value; })));
