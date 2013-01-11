@@ -113,3 +113,16 @@ echo $url->domain; // jwage
 echo $url->subdomain; // about
 echo $url->canonical; // com.jwage.about/
 ```
+
+### Extract URLs
+
+You can easily extract urls from a string of text using the `extract` method:
+
+```php
+<?php
+$string = 'some text http://google.com http://jwage.com';
+$urls = \Purl\Url::extract($string);
+
+echo $urls[0]; // http://google.com/
+echo $urls[1]; // http://jwage.com/
+```
