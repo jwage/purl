@@ -8,12 +8,11 @@ Purl is a simple OO URL manipulation library for PHP 5.3+
 Using Purl
 ----------
 
-### To create a `Url` instance is easy:
-
 ```php
 <?php
 
 $url = new \Purl\Url('http://jwage.com');
+```
 
 You can also create `Url` instances through the static `parse` method:
 
@@ -21,6 +20,7 @@ You can also create `Url` instances through the static `parse` method:
 <?php
 
 $url = Purl::parse('http://jwage.com');
+```
 
 The benefit is that you can chain additional calls after creating the `Url`:
 
@@ -41,6 +41,7 @@ echo $url->getUrl(); // https://jwage:passwordjwage.com:443/about/me?param1=valu
 // $url->path becomes instanceof Purl\Path
 // $url->query becomes insstanceof Purl\Query
 // $url->fragment becomes instanceof Purl\Fragment
+```
 
 ### Path Manipulation
 
@@ -56,6 +57,7 @@ $url->path = 'about/me/another_segment'; // $url->path becomes instanceof Purl\P
 
 // get the path segments
 print_r($url->path->getData()); // array('about', 'me', 'another_segment')
+```
 
 ### Query Manipulation
 
@@ -77,6 +79,7 @@ $url->query->setData(array(
 // set the query data from a string
 $url->query = 'param1=value1&param2=value2'; // $url->query becomes instanceof Purl\Query
 print_r($url->query->getData()); //array('param1' => 'value1', 'param2' => 'value2')
+```
 
 ### Fragment Manipulation
 
@@ -84,6 +87,7 @@ print_r($url->query->getData()); //array('param1' => 'value1', 'param2' => 'valu
 <?php
 $url = new \Purl\Url('http://jwage.com');
 $url->fragment 'about/me?param1=value1&param2=value2'; // $url->fragment becomes instanceof Purl\Fragment
+```
 
 A Fragment is made of a path and a query and comes after the hashmark (#).
 
@@ -92,3 +96,4 @@ A Fragment is made of a path and a query and comes after the hashmark (#).
 echo $url->fragment->path; // about/me
 echo $url->fragment->query; // param1=value1&param2=value2
 echo $url; // http://jwage.com#about/me?param1=value1&param2=value2
+```
