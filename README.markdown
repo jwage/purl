@@ -1,12 +1,14 @@
 Purl
 ====
 
-Purl is a simple OO URL manipulation library for PHP 5.3+
+Purl is a simple Object Oriented URL manipulation library for PHP 5.3+
 
 [![Build Status](https://secure.travis-ci.org/jwage/Purl.png?branch=master)](http://travis-ci.org/jwage/Purl)
 
 Using Purl
 ----------
+
+Creating Url instances is easy:
 
 ```php
 <?php
@@ -14,7 +16,7 @@ Using Purl
 $url = new \Purl\Url('http://jwage.com');
 ```
 
-You can also create `Url` instances through the static `parse` method:
+You can also create `Url` instances through the static `parse` method if you prefer that style:
 
 ```php
 <?php
@@ -22,7 +24,7 @@ You can also create `Url` instances through the static `parse` method:
 $url = Purl::parse('http://jwage.com');
 ```
 
-The benefit is that you can chain additional calls after creating the `Url`:
+One benefit of using this method is you can chain methods together after creating the `Url`:
 
 ```php
 <?php
