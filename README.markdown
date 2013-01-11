@@ -21,7 +21,7 @@ You can also create `Url` instances through the static `parse` method if you pre
 ```php
 <?php
 
-$url = Purl::parse('http://jwage.com');
+$url = \Purl\Url::parse('http://jwage.com');
 ```
 
 One benefit of using this method is you can chain methods together after creating the `Url`:
