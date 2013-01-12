@@ -58,7 +58,7 @@ class Parser implements ParserInterface
             $suffix = array();
             $everythingElse = array();
 
-            foreach ($parts as $i => $part) {
+            foreach ($parts as $part) {
                 if (isset(self::$effectiveTldNames[$part])) {
                     $suffix[] = $part;
                 } else {
