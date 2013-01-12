@@ -126,3 +126,24 @@ $urls = \Purl\Url::extract($string);
 echo $urls[0]; // http://google.com/
 echo $urls[1]; // http://jwage.com/
 ```
+
+### Join URLs
+
+You can easily join two URLs together using Purl:
+
+```php
+<?php
+$url = new \Purl\Url('http://jwage.com/about?param=value#fragment');
+$url->join('http://about.me/jwage');
+echo $url; // http://about.me/jwage?param=value#fragment
+```
+
+Or if you have another `Url` object already:
+
+```php
+<?php
+$url1 = new \Purl\Url('http://jwage.com/about?param=value#fragment');
+$url2 = new \Purl\Url('http://about.me/jwage');
+$url1->join($url2);
+echo $url1; // http://about.me/jwage?param=value#fragment
+```
