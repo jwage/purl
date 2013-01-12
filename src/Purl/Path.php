@@ -28,7 +28,7 @@ class Path extends AbstractPart
      *
      * @param string $path
      */
-    public function __construct($path)
+    public function __construct($path = null)
     {
         $this->path = $path;
     }
@@ -55,6 +55,17 @@ class Path extends AbstractPart
     {
         $this->initialized = false;
         $this->path = $path;
+    }
+
+    /**
+     * Get the array of segments that make up the path.
+     *
+     * @return array
+     */
+    public function getSegments()
+    {
+        $this->initialize();
+        return $this->data;
     }
 
     /**
