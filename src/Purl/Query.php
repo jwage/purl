@@ -72,5 +72,4 @@ class Query extends AbstractPart
 
         $this->data = get_defined_vars();
     }
-
 }

@@ -41,7 +41,7 @@ $url = \Purl\Url::parse('http://jwage.com')
 echo $url->getUrl(); // https://jwage:password@jwage.com:443/about/me?param1=value1&param2=value2#about/me?param1=value1&param2=value2
 
 // $url->path becomes instanceof Purl\Path
-// $url->query becomes insstanceof Purl\Query
+// $url->query becomes instanceof Purl\Query
 // $url->fragment becomes instanceof Purl\Fragment
 ```
 

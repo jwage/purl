@@ -37,7 +37,7 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $url = Url::parse('http://jwage.com')
             ->set('port', '443')
             ->set('scheme', 'https');
-        
+
         $url->query
             ->set('param1', 'value1')
             ->set('param2', 'value2');

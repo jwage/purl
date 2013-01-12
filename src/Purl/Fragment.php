@@ -34,7 +34,7 @@ class Fragment extends AbstractPart
     /**
      * Construct a new Fragment instance.
      *
-     * @param string $path
+     * @param string $fragment
      */
     public function __construct($fragment)
     {
