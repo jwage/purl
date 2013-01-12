@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="./tests/bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="Ruler Test Suite">
+        <testsuite name="Purl Test Suite">
             <directory suffix="Test.php">./tests/Purl/Test/</directory>
         </testsuite>
     </testsuites>
