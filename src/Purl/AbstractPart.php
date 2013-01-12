@@ -34,6 +34,13 @@ abstract class AbstractPart implements \ArrayAccess
     protected $data = array();
 
     /**
+     * Array mapping part names to classes.
+     *
+     * @var array
+     */
+    protected $partClassMap = array();
+
+    /**
      * Gets the data for this part. This method will initialize the part if it is not already initialized.
      *
      * @return array
@@ -182,7 +189,25 @@ abstract class AbstractPart implements \ArrayAccess
     }
 
     /**
-     * Convert the instance back in to string form from the internal data.
+     * Prepare a part value.
+     *
+     * @param string $key
+     * @param string|AbstractPart $value
+     * @return AbstractPart $part
+     */
+    protected function preparePartValue($key, $value)
+    {
+        if (!isset($this->partClassMap[$key])) {
+            return $value;
+        }
+
+        $className = $this->partClassMap[$key];
+
+        return !$value instanceof $className ? new $className($value) : $value;
+    }
+
+    /**
+     * Convert the instance back in to string form from the internal parts.
      *
      * @return string
      */

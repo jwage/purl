@@ -32,6 +32,14 @@ class Fragment extends AbstractPart
     );
 
     /**
+     * @var array
+     */
+    protected $partClassMap = array(
+        'path' => 'Purl\Path',
+        'query' => 'Purl\Query'
+    );
+
+    /**
      * Construct a new Fragment instance.
      *
      * @param string|Path $fragment Path instance of string fragment.
@@ -54,13 +62,9 @@ class Fragment extends AbstractPart
     public function set($key, $value)
     {
         $this->initialize();
-        if ($key === 'path') {
-            $value = new Path($value);
-        }
-        if ($key === 'query') {
-            $value = new Query($value);
-        }
-        $this->data[$key] = $value;
+        $this->data[$key] = $this->preparePartValue($key, $value);
+
+        return $this;
     }
 
     /**
@@ -84,6 +88,8 @@ class Fragment extends AbstractPart
         $this->initialized = false;
         $this->data = array();
         $this->fragment = $fragment;
+
+        return $this;
     }
 
     /**
@@ -105,6 +111,7 @@ class Fragment extends AbstractPart
      */
     public function getPath()
     {
+        $this->initialize();
         return $this->data['path'];
     }
 
@@ -127,6 +134,7 @@ class Fragment extends AbstractPart
      */
     public function getQuery()
     {
+        $this->initialize();
         return $this->data['query'];
     }
 
@@ -147,12 +155,8 @@ class Fragment extends AbstractPart
             $this->data = array_merge($this->data, parse_url($this->fragment));
         }
 
-        if (!$this->data['path'] instanceof Path) {
-            $this->data['path'] = new Path($this->data['path']);
-        }
-
-        if (!$this->data['query'] instanceof Query) {
-            $this->data['query'] = new Query($this->data['query']);
+        foreach ($this->data as $key => $value) {
+            $this->data[$key] = $this->preparePartValue($key, $value);
         }
     }
 }

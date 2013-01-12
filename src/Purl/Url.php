@@ -31,7 +31,30 @@ class Url extends AbstractPart
     /**
      * @var array
      */
-    protected $data = array();
+    protected $data = array(
+        'scheme'    => null,
+        'host'      => null,
+        'port'      => null,
+        'user'      => null,
+        'pass'      => null,
+        'path'      => null,
+        'query'     => null,
+        'fragment'  => null,
+        'suffix'    => null,
+        'domain'    => null,
+        'subdomain' => null,
+        'canonical' => null,
+        'resource'  => null
+    );
+
+    /**
+     * @var array
+     */
+    protected $partClassMap = array(
+        'path' => 'Purl\Path',
+        'query' => 'Purl\Query',
+        'fragment' => 'Purl\Fragment'
+    );
 
     /**
      * Construct a new Url instance.
@@ -83,7 +106,7 @@ class Url extends AbstractPart
     public function getParser()
     {
         if ($this->parser === null) {
-            $this->parser = $this->createDefaultParser();
+            $this->parser = self::createDefaultParser();
         }
 
         return $this->parser;
@@ -108,23 +131,16 @@ class Url extends AbstractPart
     public function join($url)
     {
         $this->initialize();
-        $result = $this->getParser()->parseUrl($url);
-        foreach ($result as $key => $value) {
+        $parts = $this->getParser()->parseUrl($url);
+
+        foreach ($parts as $key => $value) {
             if ($value !== null) {
                 $this->data[$key] = $value;
             }
         }
 
-        if (!$this->data['path'] instanceof Path) {
-            $this->data['path'] = new Path($this->data['path']);
-        }
-
-        if (!$this->data['query'] instanceof Query) {
-            $this->data['query'] = new Query($this->data['query']);
-        }
-
-        if (!$this->data['fragment'] instanceof Fragment) {
-            $this->data['fragment'] = new Fragment($this->data['fragment']);
+        foreach ($this->data as $key => $value) {
+            $this->data[$key] = $this->preparePartValue($key, $value);
         }
 
         return $this;
@@ -137,16 +153,7 @@ class Url extends AbstractPart
     public function set($key, $value)
     {
         $this->initialize();
-        if ($key === 'path' && !$value instanceof Path) {
-            $value = new Path($value);
-        }
-        if ($key === 'query' && !$value instanceof Query) {
-            $value = new Query($value);
-        }
-        if ($key === 'fragment' && !$value instanceof Fragment) {
-            $value = new Fragment($value);
-        }
-        $this->data[$key] = $value;
+        $this->data[$key] = $this->preparePartValue($key, $value);
 
         return $this;
     }
@@ -170,6 +177,7 @@ class Url extends AbstractPart
      */
     public function getPath()
     {
+        $this->initialize();
         return $this->data['path'];
     }
 
@@ -192,6 +200,7 @@ class Url extends AbstractPart
      */
     public function getQuery()
     {
+        $this->initialize();
         return $this->data['query'];
     }
 
@@ -214,6 +223,7 @@ class Url extends AbstractPart
      */
     public function getFragment()
     {
+        $this->initialize();
         return $this->data['fragment'];
     }
 
@@ -224,6 +234,7 @@ class Url extends AbstractPart
      */
     public function getNetloc()
     {
+        $this->initialize();
         return ($this->user && $this->pass ? $this->user.($this->pass ? ':'.$this->pass : '').'@' : '').$this->host.($this->port ? ':'.$this->port : '');
     }
 
@@ -276,24 +287,16 @@ class Url extends AbstractPart
      */
     protected function doInitialize()
     {
-        $data = $this->getParser()->parseUrl($this->url);
+        $parts = $this->getParser()->parseUrl($this->url);
 
-        foreach ($data as $k => $v) {
+        foreach ($parts as $k => $v) {
             if (!isset($this->data[$k])) {
                 $this->data[$k] = $v;
             }
         }
 
-        if (!$this->data['path'] instanceof Path) {
-            $this->data['path'] = new Path($this->data['path']);
-        }
-
-        if (!$this->data['query'] instanceof Query) {
-            $this->data['query'] = new Query($this->data['query']);
-        }
-
-        if (!$this->data['fragment'] instanceof Fragment) {
-            $this->data['fragment'] = new Fragment($this->data['fragment']);
+        foreach ($this->data as $key => $value) {
+            $this->data[$key] = $this->preparePartValue($key, $value);
         }
     }
 
@@ -323,7 +326,7 @@ class Url extends AbstractPart
      *
      * @return Parser
      */
-    private function createDefaultParser()
+    private static function createDefaultParser()
     {
         return new Parser();
     }
