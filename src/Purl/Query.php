@@ -28,7 +28,7 @@ class Query extends AbstractPart
      *
      * @param string $query
      */
-    public function __construct($query)
+    public function __construct($query = null)
     {
         $this->query = $query;
     }
