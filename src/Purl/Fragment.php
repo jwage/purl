@@ -36,7 +36,7 @@ class Fragment extends AbstractPart
      *
      * @param string|Path $fragment Path instance of string fragment.
      */
-    public function __construct($fragment, Query $query = null)
+    public function __construct($fragment = null, Query $query = null)
     {
         if ($fragment instanceof Path) {
             $this->initialized = true;
@@ -86,6 +86,50 @@ class Fragment extends AbstractPart
     }
 
     /**
+     * Set the Path instance.
+     *
+     * @param Path
+     */
+    public function setPath(Path $path)
+    {
+        $this->data['path'] = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get the Path instance.
+     *
+     * @return Path
+     */
+    public function getPath()
+    {
+        return $this->data['path'];
+    }
+
+    /**
+     * Set the Query instance.
+     *
+     * @param Query
+     */
+    public function setQuery(Query $query)
+    {
+        $this->data['query'] = $query;
+
+        return $this;
+    }
+
+    /**
+     * Get the Query instance.
+     *
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->data['query'];
+    }
+
+    /**
      * @inheritDoc
      */
     public function __toString()
@@ -98,9 +142,16 @@ class Fragment extends AbstractPart
      */
     protected function doInitialize()
     {
-        $this->data = array_merge($this->data, parse_url($this->fragment));
+        if ($this->fragment) {
+            $this->data = array_merge($this->data, parse_url($this->fragment));
+        }
 
-        $this->data['path'] = new Path($this->data['path']);
-        $this->data['query'] = new Query($this->data['query']);
+        if (!$this->data['path'] instanceof Path) {
+            $this->data['path'] = new Path($this->data['path']);
+        }
+
+        if (!$this->data['query'] instanceof Query) {
+            $this->data['query'] = new Query($this->data['query']);
+        }
     }
 }
