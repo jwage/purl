@@ -49,6 +49,7 @@ class Url extends AbstractPart
      * Static convenience method for creating a new Url instance.
      *
      * @param string $url
+     * @return Url
      */
     public static function parse($url)
     {

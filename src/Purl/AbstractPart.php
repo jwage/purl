@@ -69,6 +69,7 @@ abstract class AbstractPart implements \ArrayAccess
      * Check if this part has data by key.
      *
      * @param string $key
+     * @return boolean
      */
     public function has($key)
     {
@@ -79,6 +80,7 @@ abstract class AbstractPart implements \ArrayAccess
      * Gets data from this part by key.
      *
      * @param string $key
+     * @return boolean
      */
     public function get($key)
     {
@@ -91,6 +93,7 @@ abstract class AbstractPart implements \ArrayAccess
      *
      * @param string $key
      * @param mixed $value
+     * @return self
      */
     public function set($key, $value)
     {
