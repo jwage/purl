@@ -4,12 +4,33 @@ namespace Purl\Test;
 
 use PHPUnit_Framework_TestCase;
 use Purl\Fragment;
+use Purl\Parser;
 use Purl\Path;
 use Purl\Query;
 use Purl\Url;
 
 class UrlTest extends PHPUnit_Framework_TestCase
 {
+    public function testConstruct()
+    {
+        $url = new Url();
+        $url->setUrl('http://jwage.com');
+        $this->assertEquals('http://jwage.com/', $url->getUrl());
+        $this->assertInstanceOf('Purl\Parser', $url->getParser());
+
+        $parser = new TestParser();
+        $url = new Url('http://jwage.com', $parser);
+        $this->assertSame($parser, $url->getParser());
+    }
+
+    public function testSetParser()
+    {
+        $parser = new TestParser();
+        $url = new Url();
+        $url->setParser($parser);
+        $this->assertSame($parser, $url->getParser());
+    }
+
     public function testParseSanity()
     {
         $url = new Url('https://host.com:443/path with spaces?param1 with spaces=value1 with spaces&param2=value2#fragment1/fragment2 with spaces?param1=value1&param2 with spaces=value2 with spaces');
@@ -228,4 +249,17 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $url->set('fragment', new Fragment(new Path('about'), new Query('param=value')));
         $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
     }
+
+    public function testIdeGettersAndSetters()
+    {
+        $url = new Url('http://jwage.com');
+        $url->setPath(new Path('about'));
+        $url->setQuery(new Query('param=value'));
+        $url->setFragment(new Fragment(new Path('about'), new Query('param=value')));
+        $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
+    }
+}
+
+class TestParser extends Parser
+{
 }

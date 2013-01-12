@@ -82,6 +82,7 @@ class Fragment extends AbstractPart
     public function setFragment($fragment)
     {
         $this->initialized = false;
+        $this->data = array();
         $this->fragment = $fragment;
     }
 

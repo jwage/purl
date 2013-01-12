@@ -39,7 +39,7 @@ class Url extends AbstractPart
      * @param string $url
      * @param ParserInterface $parser
      */
-    public function __construct($url, ParserInterface $parser = null)
+    public function __construct($url = null, ParserInterface $parser = null)
     {
         $this->url = $url;
         $this->parser = $parser;
@@ -152,6 +152,72 @@ class Url extends AbstractPart
     }
 
     /**
+     * Set the Path instance.
+     *
+     * @param Path
+     */
+    public function setPath(Path $path)
+    {
+        $this->data['path'] = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get the Path instance.
+     *
+     * @return Path
+     */
+    public function getPath()
+    {
+        return $this->data['path'];
+    }
+
+    /**
+     * Set the Query instance.
+     *
+     * @param Query
+     */
+    public function setQuery(Query $query)
+    {
+        $this->data['query'] = $query;
+
+        return $this;
+    }
+
+    /**
+     * Get the Query instance.
+     *
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->data['query'];
+    }
+
+    /**
+     * Set the Fragment instance.
+     *
+     * @param Fragment
+     */
+    public function setFragment(Fragment $fragment)
+    {
+        $this->data['fragment'] = $fragment;
+
+        return $this;
+    }
+
+    /**
+     * Get the Fragment instance.
+     *
+     * @return Fragment
+     */
+    public function getFragment()
+    {
+        return $this->data['fragment'];
+    }
+
+    /**
      * Gets the netloc part of the Url. It is the user, pass, host and port returned as a string.
      *
      * @return string
@@ -182,6 +248,7 @@ class Url extends AbstractPart
     public function setUrl($url)
     {
         $this->initialized = false;
+        $this->data = array();
         $this->url = $url;
     }
 
@@ -209,11 +276,25 @@ class Url extends AbstractPart
      */
     protected function doInitialize()
     {
-        $this->data = $this->getParser()->parseUrl($this->url);
+        $data = $this->getParser()->parseUrl($this->url);
 
-        $this->data['path'] = new Path($this->data['path']);
-        $this->data['query'] = new Query($this->data['query']);
-        $this->data['fragment'] = new Fragment($this->data['fragment']);
+        foreach ($data as $k => $v) {
+            if (!isset($this->data[$k])) {
+                $this->data[$k] = $v;
+            }
+        }
+
+        if (!$this->data['path'] instanceof Path) {
+            $this->data['path'] = new Path($this->data['path']);
+        }
+
+        if (!$this->data['query'] instanceof Query) {
+            $this->data['query'] = new Query($this->data['query']);
+        }
+
+        if (!$this->data['fragment'] instanceof Fragment) {
+            $this->data['fragment'] = new Fragment($this->data['fragment']);
+        }
     }
 
     /**
