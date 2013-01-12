@@ -3,6 +3,9 @@
 namespace Purl\Test;
 
 use PHPUnit_Framework_TestCase;
+use Purl\Fragment;
+use Purl\Path;
+use Purl\Query;
 use Purl\Url;
 
 class UrlTest extends PHPUnit_Framework_TestCase
@@ -215,5 +218,14 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ftps://jwage.com/', (string) $urls[2]);
         $this->assertEquals('http://google.com/', (string) $urls[3]);
         $this->assertEquals('http://jwage.com/', (string) $urls[4]);
+    }
+
+    public function testManualObjectConstruction()
+    {
+        $url = new Url('http://jwage.com');
+        $url->set('path', new Path('about'));
+        $url->set('query', new Query('param=value'));
+        $url->set('fragment', new Fragment(new Path('about'), new Query('param=value')));
+        $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
     }
 }

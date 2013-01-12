@@ -34,11 +34,17 @@ class Fragment extends AbstractPart
     /**
      * Construct a new Fragment instance.
      *
-     * @param string $fragment
+     * @param string|Path $fragment Path instance of string fragment.
      */
-    public function __construct($fragment)
+    public function __construct($fragment, Query $query = null)
     {
-        $this->fragment = $fragment;
+        if ($fragment instanceof Path) {
+            $this->initialized = true;
+            $this->data['path'] = $fragment;
+        } else {
+            $this->fragment = $fragment;
+        }
+        $this->data['query'] = $query;
     }
 
     /**

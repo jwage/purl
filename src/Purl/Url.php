@@ -137,13 +137,13 @@ class Url extends AbstractPart
     public function set($key, $value)
     {
         $this->initialize();
-        if ($key === 'path') {
+        if ($key === 'path' && !$value instanceof Path) {
             $value = new Path($value);
         }
-        if ($key === 'query') {
+        if ($key === 'query' && !$value instanceof Query) {
             $value = new Query($value);
         }
-        if ($key === 'fragment') {
+        if ($key === 'fragment' && !$value instanceof Fragment) {
             $value = new Fragment($value);
         }
         $this->data[$key] = $value;
