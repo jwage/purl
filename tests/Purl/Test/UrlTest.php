@@ -5,6 +5,7 @@ namespace Purl\Test;
 use PHPUnit_Framework_TestCase;
 use Purl\Fragment;
 use Purl\Parser;
+use Purl\ParserInterface;
 use Purl\Path;
 use Purl\Query;
 use Purl\Url;
@@ -142,19 +143,19 @@ class UrlTest extends PHPUnit_Framework_TestCase
     public function testCanonicalization()
     {
         $url = new Url('http://jwage.com');
-        $this->assertEquals('com', $url->suffix);
-        $this->assertEquals('jwage', $url->domain);
+        $this->assertEquals('com', $url->publicSuffix);
+        $this->assertEquals('jwage.com', $url->registerableDomain);
         $this->assertEquals('com.jwage', $url->canonical);
 
         $url = new Url('http://sub.domain.jwage.com/index.php?param1=value1');
-        $this->assertEquals('com', $url->suffix);
-        $this->assertEquals('jwage', $url->domain);
+        $this->assertEquals('com', $url->publicSuffix);
+        $this->assertEquals('jwage.com', $url->registerableDomain);
         $this->assertEquals('sub.domain', $url->subdomain);
         $this->assertEquals('com.jwage.domain.sub/index.php?param1=value1', $url->canonical);
 
         $url = new Url('http://sub.domain.jwage.co.uk/index.php?param1=value1');
-        $this->assertEquals('co.uk', $url->suffix);
-        $this->assertEquals('jwage', $url->domain);
+        $this->assertEquals('co.uk', $url->publicSuffix);
+        $this->assertEquals('jwage.co.uk', $url->registerableDomain);
         $this->assertEquals('sub.domain', $url->subdomain);
         $this->assertEquals('uk.co.jwage.domain.sub/index.php?param1=value1', $url->canonical);
     }
@@ -260,6 +261,10 @@ class UrlTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class TestParser extends Parser
+class TestParser implements ParserInterface
 {
+    public function parseUrl($url)
+    {
+        return $url;
+    }
 }

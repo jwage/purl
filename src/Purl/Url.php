@@ -11,6 +11,10 @@
 
 namespace Purl;
 
+use Pdp\PublicSuffixList;
+use Pdp\PublicSuffixListManager;
+use Pdp\Parser as PslParser;
+
 /**
  * Url is a simple OO class for manipulating Urls in PHP.
  *
@@ -32,19 +36,19 @@ class Url extends AbstractPart
      * @var array
      */
     protected $data = array(
-        'scheme'    => null,
-        'host'      => null,
-        'port'      => null,
-        'user'      => null,
-        'pass'      => null,
-        'path'      => null,
-        'query'     => null,
-        'fragment'  => null,
-        'suffix'    => null,
-        'domain'    => null,
-        'subdomain' => null,
-        'canonical' => null,
-        'resource'  => null
+        'scheme'             => null,
+        'host'               => null,
+        'port'               => null,
+        'user'               => null,
+        'pass'               => null,
+        'path'               => null,
+        'query'              => null,
+        'fragment'           => null,
+        'publicSuffix'       => null,
+        'registerableDomain' => null,
+        'subdomain'          => null,
+        'canonical'          => null,
+        'resource'           => null
     );
 
     /**
@@ -328,6 +332,9 @@ class Url extends AbstractPart
      */
     private static function createDefaultParser()
     {
-        return new Parser();
+        $pslManager = new PublicSuffixListManager(dirname(dirname(__DIR__)) . '/data');
+        $pslParser = new PslParser($pslManager->getList());
+        
+        return new Parser($pslParser);
     }
 }
