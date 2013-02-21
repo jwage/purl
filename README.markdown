@@ -102,14 +102,14 @@ echo $url; // http://jwage.com#about/me?param1=value1&param2=value2
 
 ### Domain Parts
 
-Purl can parse a URL in to parts and its canonical form. It uses the list of domains from http://publicsuffix.org to break the domain into its suffix, domain, subdomain and canonical form.
+Purl can parse a URL in to parts and its canonical form. It uses the list of domains from http://publicsuffix.org to break the domain into its public suffix, registerable domain, subdomain and canonical form.
 
 ```php
 <?php
 $url = new \Purl\Url('http://about.jwage.com');
 
-echo $url->suffix; // com
-echo $url->domain; // jwage
+echo $url->publicSuffix; // com
+echo $url->registerableDomain; // jwage
 echo $url->subdomain; // about
 echo $url->canonical; // com.jwage.about/
 ```
