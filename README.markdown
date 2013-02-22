@@ -109,7 +109,7 @@ Purl can parse a URL in to parts and its canonical form. It uses the list of dom
 $url = new \Purl\Url('http://about.jwage.com');
 
 echo $url->publicSuffix; // com
-echo $url->registerableDomain; // jwage
+echo $url->registerableDomain; // jwage.com
 echo $url->subdomain; // about
 echo $url->canonical; // com.jwage.about/
 ```
