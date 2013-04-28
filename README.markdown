@@ -114,6 +114,12 @@ echo $url->subdomain; // about
 echo $url->canonical; // com.jwage.about/
 ```
 
+#### Staying Up To Date
+
+The list of domains used to parse a URL into its component parts is updated from time to time.
+To ensure that you have the latest copy of the public suffix list, you can refresh 
+the local copy of the list by running `./vendor/bin/pdp-psl data`
+
 ### Extract URLs
 
 You can easily extract urls from a string of text using the `extract` method:
