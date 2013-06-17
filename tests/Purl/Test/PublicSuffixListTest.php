@@ -36,6 +36,9 @@ class PublicSuffixListTest extends PHPUnit_Framework_TestCase
             array('http://a.b.test.om', 'test.om', 'b.test.om', 'a', 'a.b.test.om'),
             array('http://baez.songfest.om', 'om', 'songfest.om', 'baez', 'baez.songfest.om'),
             array('http://politics.news.omanpost.om', 'om', 'omanpost.om', 'politics.news', 'politics.news.omanpost.om'),
+            array('http://test.museum', 'museum', 'test.museum', null, 'test.museum'),
+            array('http://bob.smith.name', 'name', 'smith.name', 'bob', 'bob.smith.name'),
+            array('http://tons.of.info', 'info', 'of.info', 'tons', 'tons.of.info')
         );
     }
 }
