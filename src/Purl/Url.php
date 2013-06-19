@@ -277,6 +277,30 @@ class Url extends AbstractPart
         $this->initialize();
         return $this->scheme && $this->host;
     }
+    
+    /**
+     * Get the "network-path reference" / "schemeless" / "protocol relative" version of the URL.
+     * 
+     * @see http://www.paulirish.com/2010/the-protocol-relative-url/
+     * @see http://tools.ietf.org/html/rfc3986#section-4.2
+     * 
+     * @return string
+     */
+    public function getNetworkPathReference()
+    {
+        $parts = array_map(function($value) { return (string) $value; }, $this->data);
+        
+        $parts['path'] = ltrim($parts['path'], '/');
+
+        return sprintf('//%s%s%s/%s%s%s',
+            $parts['user'] ? sprintf('%s%s@', $parts['user'], $parts['pass'] ? sprintf(':%s', $parts['pass']) : '') : '',
+            $parts['host'],
+            $parts['port'] ? sprintf(':%d', $parts['port']) : '',
+            $parts['path'] ? $parts['path'] : '',
+            $parts['query'] ? '?'.$parts['query'] : '',
+            $parts['fragment'] ? '#'.$parts['fragment'] : ''
+        );
+    }
 
     /**
      * @inheritDoc
