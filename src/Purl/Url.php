@@ -314,15 +314,24 @@ class Url extends AbstractPart
     {
         $parts['path'] = ltrim($parts['path'], '/');
 
-        return sprintf('%s://%s%s%s/%s%s%s',
+        $url = sprintf('%s://%s%s%s',
             $parts['scheme'],
             $parts['user'] ? sprintf('%s%s@', $parts['user'], $parts['pass'] ? sprintf(':%s', $parts['pass']) : '') : '',
             $parts['host'],
-            $parts['port'] ? sprintf(':%d', $parts['port']) : '',
+            $parts['port'] ? sprintf(':%d', $parts['port']) : ''
+        );
+
+        if($url != $parts['scheme'] . '://'){
+            $url .= '/';
+        }
+
+        $url .= sprintf('%s%s%s',
             $parts['path'] ? $parts['path'] : '',
             $parts['query'] ? '?'.$parts['query'] : '',
             $parts['fragment'] ? '#'.$parts['fragment'] : ''
         );
+
+        return $url;
     }
 
     /**
