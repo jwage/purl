@@ -60,7 +60,15 @@ class Parser implements ParserInterface
             $url = (string) $url;
         }
 
-        $result = parse_url($url);
+        $result = false;
+
+        // If there's a single leading forward slash, use parse_url()
+        if (preg_match('#^\/{1}[^\/]#', $url) === 1) { 
+            $result = parse_url($url);
+        } else {
+            // Otherwise use the PSL parser
+            $result = $this->pslParser->parseUrl($url)->toArray();
+        }
 
         if ($result === false) {
             throw new \InvalidArgumentException(sprintf('Invalid url %s', $url));
