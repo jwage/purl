@@ -1,3 +1,4 @@
 vendor
 composer.lock
 data/public-suffix-list.txt
+phpunit.xml
