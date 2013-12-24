@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of the Purl package, a project by Jonathan H. Wage.
  *
  * (c) 2013 Jonathan H. Wage
