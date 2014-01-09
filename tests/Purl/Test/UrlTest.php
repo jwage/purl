@@ -259,6 +259,12 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $url->setFragment(new Fragment(new Path('about'), new Query('param=value')));
         $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
     }
+    
+    public function testGetNetworkPathReference()
+    {
+        $url = new Url('http://jwage.com/image.jpg');
+        $this->assertEquals('//jwage.com/image.jpg', $url->getNetworkPathReference());
+    }
 }
 
 class TestParser implements ParserInterface
