@@ -11,24 +11,18 @@ Using Purl
 Creating Url instances is easy:
 
 ```php
-<?php
-
 $url = new \Purl\Url('http://jwage.com');
 ```
 
 You can also create `Url` instances through the static `parse` method if you prefer that style:
 
 ```php
-<?php
-
 $url = \Purl\Url::parse('http://jwage.com');
 ```
 
 One benefit of using this method is you can chain methods together after creating the `Url`:
 
 ```php
-<?php
-
 $url = \Purl\Url::parse('http://jwage.com')
 	->set('scheme', 'https')
 	->set('port', '443')
@@ -48,7 +42,6 @@ echo $url->getUrl(); // https://jwage:password@jwage.com:443/about/me?param1=val
 ### Path Manipulation
 
 ```php
-<?php
 $url = new \Purl\Url('http://jwage.com');
 
 // add path segments one at a time
@@ -64,7 +57,6 @@ print_r($url->path->getData()); // array('about', 'me', 'another_segment')
 ### Query Manipulation
 
 ```php
-<?php
 $url = new \Purl\Url('http://jwage.com');
 $url->query->set('param1', 'value1');
 $url->query->set('param2', 'value2');
@@ -86,7 +78,6 @@ print_r($url->query->getData()); //array('param1' => 'value1', 'param2' => 'valu
 ### Fragment Manipulation
 
 ```php
-<?php
 $url = new \Purl\Url('http://jwage.com');
 $url->fragment 'about/me?param1=value1&param2=value2'; // $url->fragment becomes instanceof Purl\Fragment
 ```
@@ -94,7 +85,6 @@ $url->fragment 'about/me?param1=value1&param2=value2'; // $url->fragment becomes
 A Fragment is made of a path and a query and comes after the hashmark (#).
 
 ```php
-<?php
 echo $url->fragment->path; // about/me
 echo $url->fragment->query; // param1=value1&param2=value2
 echo $url; // http://jwage.com#about/me?param1=value1&param2=value2
@@ -105,7 +95,6 @@ echo $url; // http://jwage.com#about/me?param1=value1&param2=value2
 Purl can parse a URL in to parts and its canonical form. It uses the list of domains from http://publicsuffix.org to break the domain into its public suffix, registerable domain, subdomain and canonical form.
 
 ```php
-<?php
 $url = new \Purl\Url('http://about.jwage.com');
 
 echo $url->publicSuffix; // com
@@ -125,7 +114,6 @@ the local copy of the list by running `./vendor/bin/pdp-psl data`
 You can easily extract urls from a string of text using the `extract` method:
 
 ```php
-<?php
 $string = 'some text http://google.com http://jwage.com';
 $urls = \Purl\Url::extract($string);
 
@@ -138,7 +126,6 @@ echo $urls[1]; // http://jwage.com/
 You can easily join two URLs together using Purl:
 
 ```php
-<?php
 $url = new \Purl\Url('http://jwage.com/about?param=value#fragment');
 $url->join('http://about.me/jwage');
 echo $url; // http://about.me/jwage?param=value#fragment
@@ -147,7 +134,6 @@ echo $url; // http://about.me/jwage?param=value#fragment
 Or if you have another `Url` object already:
 
 ```php
-<?php
 $url1 = new \Purl\Url('http://jwage.com/about?param=value#fragment');
 $url2 = new \Purl\Url('http://about.me/jwage');
 $url1->join($url2);
