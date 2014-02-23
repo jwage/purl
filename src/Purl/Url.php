@@ -11,7 +11,6 @@
 
 namespace Purl;
 
-use Pdp\PublicSuffixList;
 use Pdp\PublicSuffixListManager;
 use Pdp\Parser as PslParser;
 

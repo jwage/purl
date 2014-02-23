@@ -38,7 +38,7 @@ class Autoloader
      *
      * @param string $baseDir Purl library base directory (default: dirname(__FILE__).'/..')
      *
-     * @return Purl\Autoloader Registered Autoloader instance
+     * @return Autoloader Registered Autoloader instance
      */
     public static function register($baseDir = null)
     {
