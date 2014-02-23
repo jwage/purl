@@ -14,7 +14,10 @@ namespace Purl;
 /**
  * Fragment represents the part of a Url after the hashmark (#).
  *
- * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ *
+ * @property \Purl\Path $path
+ * @property \Purl\Query $query
  */
 class Fragment extends AbstractPart
 {
