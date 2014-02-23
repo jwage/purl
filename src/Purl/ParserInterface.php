@@ -18,5 +18,10 @@ namespace Purl;
  */
 interface ParserInterface
 {
+    /**
+     * @param string|\Purl\Url $url
+     *
+     * @return array $parsedUrl
+     */
     public function parseUrl($url);
 }

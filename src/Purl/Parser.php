@@ -54,42 +54,50 @@ class Parser implements ParserInterface
         $this->pslParser = $pslParser;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function parseUrl($url)
     {
-        if ($url instanceof Url) {
-            $url = (string) $url;
-        }
+        $url = (string) $url;
 
-        $result = false;
+        $parsedUrl = $this->doParseUrl($url);
 
-        // If there's a single leading forward slash, use parse_url()
-        if (preg_match('#^\/{1}[^\/]#', $url) === 1) { 
-            $result = parse_url($url);
-        } else {
-            // Otherwise use the PSL parser
-            $result = $this->pslParser->parseUrl($url)->toArray();
-        }
-
-        if ($result === false) {
+        if ($parsedUrl === false) {
             throw new \InvalidArgumentException(sprintf('Invalid url %s', $url));
         }
 
-        $result = array_merge(self::$defaultParts, $result);
+        $parsedUrl = array_merge(self::$defaultParts, $parsedUrl);
 
-        if (isset($result['host'])) {
-            $result['publicSuffix'] = $this->pslParser->getPublicSuffix($result['host']);
-            $result['registerableDomain'] = $this->pslParser->getRegisterableDomain($result['host']);
-            $result['subdomain'] = $this->pslParser->getSubdomain($result['host']);
-            $result['canonical'] = implode('.', array_reverse(explode('.', $result['host']))).(isset($result['path']) ? $result['path'] : '').(isset($result['query']) ? '?'.$result['query'] : '');
+        if (isset($parsedUrl['host'])) {
+            $parsedUrl['publicSuffix'] = $this->pslParser->getPublicSuffix($parsedUrl['host']);
+            $parsedUrl['registerableDomain'] = $this->pslParser->getRegisterableDomain($parsedUrl['host']);
+            $parsedUrl['subdomain'] = $this->pslParser->getSubdomain($parsedUrl['host']);
+            $parsedUrl['canonical'] = implode('.', array_reverse(explode('.', $parsedUrl['host']))).(isset($parsedUrl['path']) ? $parsedUrl['path'] : '').(isset($parsedUrl['query']) ? '?'.$parsedUrl['query'] : '');
 
-            $result['resource'] = isset($result['path']) ? $result['path'] : '';
+            $parsedUrl['resource'] = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
 
-            if (isset($result['query'])) {
-                $result['resource'] .= '?'.$result['query'];
+            if (isset($parsedUrl['query'])) {
+                $parsedUrl['resource'] .= '?'.$parsedUrl['query'];
             }
         }
 
-        return $result;
+        return $parsedUrl;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return array $parsedUrl
+     */
+    protected function doParseUrl($url)
+    {
+        // If there's a single leading forward slash, use parse_url()
+        if (preg_match('#^\/{1}[^\/]#', $url) === 1) { 
+            return parse_url($url);
+        } else {
+            // Otherwise use the PSL parser
+            return $this->pslParser->parseUrl($url)->toArray();
+        }
+    }
 }
