@@ -18,6 +18,20 @@ use Pdp\Parser as PslParser;
  * Url is a simple OO class for manipulating Urls in PHP.
  *
  * @author      Jonathan H. Wage <jonwage@gmail.com>
+ *
+ * @property string $scheme
+ * @property string $host
+ * @property integer $port
+ * @property string $user
+ * @property string $pass
+ * @property \Purl\Path $path
+ * @property \Purl\Query $query
+ * @property \Purl\Fragment $fragment
+ * @property string $publicSuffix
+ * @property string $registerableDomain
+ * @property string $subdomain
+ * @property string $canonical
+ * @property string $resource
  */
 class Url extends AbstractPart
 {
