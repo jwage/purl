@@ -13,6 +13,6 @@
     },
     "require": {
     	"php": ">=5.3.0",
-        "jeremykendall/php-domain-parser": "1.*"
+        "jeremykendall/php-domain-parser": "~1.3"
     }
 }
