@@ -80,6 +80,7 @@ abstract class AbstractPart implements \ArrayAccess
      */
     public function has($key)
     {
+        $this->initialize();
         return isset($this->data[$key]);
     }
 
