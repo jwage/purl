@@ -49,11 +49,6 @@ class PublicSuffixListTest extends PHPUnit_Framework_TestCase
             array('test.museum', 'museum', 'test.museum', null, 'test.museum'),
             array('bob.smith.name', 'name', 'smith.name', 'bob', 'bob.smith.name'),
             array('tons.of.info', 'info', 'of.info', 'tons', 'tons.of.info'),
-            array('http://Яндекс.РФ', 'рф', 'яндекс.рф', null, 'яндекс.рф'),
-            array('www.食狮.中国', '中国', '食狮.中国', 'www', 'www.食狮.中国'),
-            array('食狮.com.cn', 'com.cn', '食狮.com.cn', null, '食狮.com.cn'),
-            array('www.xn--85x722f.xn--fiqs8s', 'xn--fiqs8s', 'xn--85x722f.xn--fiqs8s', 'www', 'www.xn--85x722f.xn--fiqs8s'),
-            array('xn--85x722f.com.cn', 'com.cn', 'xn--85x722f.com.cn', null, 'xn--85x722f.com.cn'),
         );
     }
 }
