@@ -259,6 +259,49 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $url->setFragment(new Fragment(new Path('about'), new Query('param=value')));
         $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
     }
+
+    public function testFromCurrentServerVariables() {
+        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['SERVER_PORT'] = 80;
+        $_SERVER['REQUEST_URI'] = '/about?param=value';
+
+        $url = Url::fromCurrent();
+        $this->assertEquals('http://jwage.com/about?param=value', (string) $url);
+
+        $_SERVER['HTTPS'] = 'off';
+        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        unset($_SERVER['SERVER_PORT']);
+        unset($_SERVER['REQUEST_URI']);
+
+        $url = Url::fromCurrent();
+        $this->assertEquals('http://jwage.com/', (string) $url);
+
+        $_SERVER['HTTPS'] = 'on';
+        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['SERVER_PORT'] = 443;
+        unset($_SERVER['REQUEST_URI']);
+
+        $url = Url::fromCurrent();
+        $this->assertEquals('https://jwage.com/', (string) $url);
+
+        unset($_SERVER['HTTPS']);
+        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['SERVER_PORT'] = 8080;
+        unset($_SERVER['REQUEST_URI']);
+
+        $url = Url::fromCurrent();
+        $this->assertEquals('http://jwage.com:8080/', (string) $url);
+
+        unset($_SERVER['HTTPS']);
+        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['SERVER_PORT'] = 80;
+        unset($_SERVER['REQUEST_URI']);
+        $_SERVER['PHP_AUTH_USER'] = 'user';
+        $_SERVER['PHP_AUTH_PW'] = 'passwd123';
+
+        $url = Url::fromCurrent();
+        $this->assertEquals('http://user:passwd123@jwage.com/', (string) $url);
+    }
 }
 
 class TestParser implements ParserInterface

@@ -116,6 +116,46 @@ class Url extends AbstractPart
     }
 
     /**
+     * Creates an Url instance based on data available on $_SERVER variable.
+     *
+     * @return Url
+     */
+    public static function fromCurrent()
+    {
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+
+        $host = $_SERVER['HTTP_HOST'];
+        $baseUrl = "$scheme://$host";
+
+        $url = new self($baseUrl);
+
+        if (!empty($_SERVER['REQUEST_URI'])) {
+            list($path, $query) = explode('?', $_SERVER['REQUEST_URI'], 2);
+            $url->set('path', $path);
+            $url->set('query', $query);
+        }
+
+        // Only set port if different from default (80 or 443)
+        if (!empty($_SERVER['SERVER_PORT'])) {
+            $port = $_SERVER['SERVER_PORT'];
+            if (($scheme == 'http' && $port != 80) ||
+                ($scheme == 'https' && $port != 443)) {
+                $url->set('port', $port);
+            }
+        }
+
+        // Authentication
+        if (!empty($_SERVER['PHP_AUTH_USER'])) {
+            $url->set('user', $_SERVER['PHP_AUTH_USER']);
+            if (!empty($_SERVER['PHP_AUTH_PW'])) {
+                $url->set('pass', $_SERVER['PHP_AUTH_PW']);
+            }
+        }
+
+        return $url;
+    }
+
+    /**
      * Gets the ParserInterface instance used to parse this Url instance.
      *
      * @return ParserInterface
