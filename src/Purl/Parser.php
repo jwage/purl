@@ -26,8 +26,6 @@ class Parser implements ParserInterface
      */
     private $pslParser;
 
-    private static $effectiveTldNames = array();
-
     private static $defaultParts = array(
         'scheme'             => null,
         'host'               => null,

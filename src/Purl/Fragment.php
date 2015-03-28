@@ -45,7 +45,8 @@ class Fragment extends AbstractPart
     /**
      * Construct a new Fragment instance.
      *
-     * @param string|Path $fragment Path instance of string fragment.
+     * @param string|Path|null $fragment Path instance of string fragment.
+     * @param Query|null $query
      */
     public function __construct($fragment = null, Query $query = null)
     {

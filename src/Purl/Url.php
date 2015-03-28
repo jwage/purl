@@ -41,7 +41,7 @@ class Url extends AbstractPart
     private $url;
 
     /**
-     * @var Purl\ParserInterface
+     * @var ParserInterface
      */
     private $parser;
 
