@@ -85,7 +85,7 @@ print_r($url->query->getData()); //array('param1' => 'value1', 'param2' => 'valu
 
 ```php
 $url = new \Purl\Url('http://jwage.com');
-$url->fragment 'about/me?param1=value1&param2=value2'; // $url->fragment becomes instanceof Purl\Fragment
+$url->fragment = 'about/me?param1=value1&param2=value2'; // $url->fragment becomes instanceof Purl\Fragment
 ```
 
 A Fragment is made of a path and a query and comes after the hashmark (#).
