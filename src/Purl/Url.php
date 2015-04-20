@@ -130,9 +130,10 @@ class Url extends AbstractPart
         $url = new self($baseUrl);
 
         if (!empty($_SERVER['REQUEST_URI'])) {
-            list($path, $query) = explode('?', $_SERVER['REQUEST_URI'], 2);
-            $url->set('path', $path);
-            $url->set('query', $query);
+            $parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+            $url->set('path', $parts[0]);
+            if (count($parts) > 1)
+                $url->set('query', $parts[1]);
         }
 
         // Only set port if different from default (80 or 443)
