@@ -263,6 +263,11 @@ class UrlTest extends PHPUnit_Framework_TestCase
     public function testFromCurrentServerVariables() {
         $_SERVER['HTTP_HOST'] = 'jwage.com';
         $_SERVER['SERVER_PORT'] = 80;
+        $_SERVER['REQUEST_URI'] = '/about';
+
+        $url = Url::fromCurrent();
+        $this->assertEquals('http://jwage.com/about', (string) $url);
+
         $_SERVER['REQUEST_URI'] = '/about?param=value';
 
         $url = Url::fromCurrent();
