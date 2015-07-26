@@ -130,7 +130,7 @@ class Url extends AbstractPart
         $url = new self($baseUrl);
 
         if (!empty($_SERVER['REQUEST_URI'])) {
-            list($path, $query) = explode('?', $_SERVER['REQUEST_URI'], 2);
+            list($path, $query) = array_pad(explode('?', $_SERVER['REQUEST_URI'], 2), 2, null);
             $url->set('path', $path);
             $url->set('query', $query);
         }
