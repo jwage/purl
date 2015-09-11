@@ -10,6 +10,13 @@ Purl is a simple Object Oriented URL manipulation library for PHP 5.3+
 [![Total Downloads](https://poser.pugx.org/jwage/purl/downloads.png)](https://packagist.org/packages/jwage/purl)
 [![Dependency Status](https://www.versioneye.com/php/jwage:purl/1.0.0/badge.png)](https://www.versioneye.com/php/jwage:purl/1.0.0)
 
+## Installation
+
+The suggested installation method is via [composer](https://getcomposer.org/):
+
+```sh
+composer require jwage/purl
+```
 
 Using Purl
 ----------
