@@ -122,7 +122,7 @@ class Url extends AbstractPart
      */
     public static function fromCurrent()
     {
-        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
 
         $host = $_SERVER['HTTP_HOST'];
         $baseUrl = "$scheme://$host";
