@@ -233,13 +233,14 @@ class UrlTest extends PHPUnit_Framework_TestCase
 
     public function testExtract()
     {
-        $urls = Url::extract("test\nmore test https://google.com ftp://jwage.com ftps://jwage.com http://google.com\ntesting this out http://jwage.com more text");
-        $this->assertEquals(5, count($urls));
+        $urls = Url::extract("test\nmore test https://google.com ftp://jwage.com ftps://jwage.com http://google.com\ntesting this out http://jwage.com more text https://we-are-a-professional-studio-of.photography");
+        $this->assertEquals(6, count($urls));
         $this->assertEquals('https://google.com/', (string) $urls[0]);
         $this->assertEquals('ftp://jwage.com/', (string) $urls[1]);
         $this->assertEquals('ftps://jwage.com/', (string) $urls[2]);
         $this->assertEquals('http://google.com/', (string) $urls[3]);
         $this->assertEquals('http://jwage.com/', (string) $urls[4]);
+        $this->assertEquals('https://we-are-a-professional-studio-of.photography/', (string) $urls[5]);
     }
 
     public function testManualObjectConstruction()
