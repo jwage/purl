@@ -104,7 +104,7 @@ class Url extends AbstractPart
      */
     public static function extract($string)
     {
-        $regex = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+        $regex = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/";
 
         preg_match_all($regex, $string, $matches);
         $urls = array();
