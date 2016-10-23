@@ -68,8 +68,8 @@ class Query extends AbstractPart
      */
     protected function doInitialize()
     {
-        parse_str($this->query);
+        parse_str($this->query, $data);
 
-        $this->data = get_defined_vars();
+        $this->data = $data;
     }
 }
