@@ -314,7 +314,9 @@ class Url extends AbstractPart
             return (string) $value;
         }, $this->data);
         
-        if(!$this->isAbsolute()) return self::httpBuildUrlRelative($parts);
+        if(!$this->isAbsolute()) {
+            return self::httpBuildRelativeUrl($parts);
+        }
                 
         return self::httpBuildUrl($parts);
     }
@@ -376,7 +378,7 @@ class Url extends AbstractPart
      */
     private static function httpBuildUrl(array $parts)
     {
-        $relative = self::httpBuildUrlRelative($parts);
+        $relative = self::httpBuildRelativeUrl($parts);
 
         return sprintf('%s://%s%s%s%s',
             $parts['scheme'],
@@ -393,7 +395,7 @@ class Url extends AbstractPart
      * @param array $parts
      * @return string $url
      */
-    private static function httpBuildUrlRelative(array $parts)
+    private static function httpBuildRelativeUrl(array $parts)
     {
         $parts['path'] = ltrim($parts['path'], '/');
 

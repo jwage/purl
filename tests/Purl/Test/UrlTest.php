@@ -311,22 +311,22 @@ class UrlTest extends PHPUnit_Framework_TestCase
     public function testRelativeUrl() 
     {
         // test all resource parts
-        $url = new Url("/path1/path2?x=1&y=2#frag");
+        $url = new Url('/path1/path2?x=1&y=2#frag');
         $this->assertFalse($url->isAbsolute());        
-        $this->assertEquals("/path1/path2?x=1&y=2#frag",(string)$url);
+        $this->assertEquals('/path1/path2?x=1&y=2#frag', (string)$url);
         
         // test base path        
-        $url = new Url("/path1");        
-        $this->assertEquals("/path1",(string)$url);
+        $url = new Url('/path1');        
+        $this->assertEquals('/path1', (string)$url);
         
         // test minimal path
-        $url = new Url("/");       
-        $this->assertEquals("/",(string)$url);
+        $url = new Url('/');       
+        $this->assertEquals('/', (string)$url);
         
         // test feature request
         $url = new Url('/events');
         $url->query->set('param1', 'value1');
-        $this->assertEquals("/events?param1=value1",(string)$url);
+        $this->assertEquals('/events?param1=value1', (string)$url);
        
     }
 }
