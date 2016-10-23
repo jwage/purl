@@ -91,7 +91,14 @@ class Parser implements ParserInterface
     protected function doParseUrl($url)
     {
         // If there's a single leading forward slash, use parse_url()
-        if (preg_match('#^\/{1}[^\/]#', $url) === 1) { 
+        // Expected matches:
+        // 
+        // "/one/two"   YES
+        // "/"          YES PLEASE
+        // "//"         NO
+        // "//one/two"  NO
+        // ""           HELL NO
+        if (preg_match('#^[\/]([^\/]|$)#', $url) === 1) { 
             return parse_url($url);
         } else {
             // Otherwise use the PSL parser

@@ -307,6 +307,28 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $url = Url::fromCurrent();
         $this->assertEquals('http://user:passwd123@jwage.com/', (string) $url);
     }
+    
+    public function testRelativeUrl() 
+    {
+        // test all resource parts
+        $url = new Url('/path1/path2?x=1&y=2#frag');
+        $this->assertFalse($url->isAbsolute());        
+        $this->assertEquals('/path1/path2?x=1&y=2#frag', (string)$url);
+        
+        // test base path        
+        $url = new Url('/path1');        
+        $this->assertEquals('/path1', (string)$url);
+        
+        // test minimal path
+        $url = new Url('/');       
+        $this->assertEquals('/', (string)$url);
+        
+        // test feature request
+        $url = new Url('/events');
+        $url->query->set('param1', 'value1');
+        $this->assertEquals('/events?param1=value1', (string)$url);
+       
+    }
 }
 
 class TestParser implements ParserInterface
