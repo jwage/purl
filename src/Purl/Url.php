@@ -310,9 +310,7 @@ class Url extends AbstractPart
     {
         $this->initialize();
         
-        $parts = array_map(function($value) {
-            return (string) $value;
-        }, $this->data);
+        $parts = array_map('strval', $this->data);
         
         if(!$this->isAbsolute()) {
             return self::httpBuildRelativeUrl($parts);
