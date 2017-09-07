@@ -21,10 +21,11 @@ composer require jwage/purl
 Using Purl
 ----------
 
-Creating Url instances is easy:
+Creating Url instances is easy.  You can specify the URL you want, or just use the current URL:
 
 ```php
 $url = new \Purl\Url('http://jwage.com');
+$currentUrl = \Purl\Url::fromCurrent();
 ```
 
 You can also create `Url` instances through the static `parse` method if you prefer that style:
