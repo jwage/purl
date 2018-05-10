@@ -2,10 +2,10 @@
 
 namespace Purl\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Purl\Query;
 
-class QueryTest extends PHPUnit_Framework_TestCase
+class QueryTest extends TestCase
 {
     public function testConstruct()
     {

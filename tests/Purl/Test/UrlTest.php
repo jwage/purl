@@ -2,7 +2,7 @@
 
 namespace Purl\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Purl\Fragment;
 use Purl\Parser;
 use Purl\ParserInterface;
@@ -10,7 +10,7 @@ use Purl\Path;
 use Purl\Query;
 use Purl\Url;
 
-class UrlTest extends PHPUnit_Framework_TestCase
+class UrlTest extends TestCase
 {
     public function testConstruct()
     {
@@ -96,6 +96,14 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('about', (string) $url->path);
     }
 
+    public function testGetPath()
+    {
+        $url = new Url('http://jwage.com');
+        $url->path = 'about';
+        $this->assertInstanceOf('Purl\Path', $url->path);
+        $this->assertEquals('about', (string) $url->getPath());    
+    }
+
     public function testSetQuery()
     {
         $url = new Url('http://jwage.com');
@@ -105,12 +113,29 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('param1' => 'value1'), $url->query->getData());
     }
 
+    public function testGetQuery()
+    {
+        $url = new Url('http://jwage.com');
+        $url->query->set('param1', 'value1');
+        $this->assertInstanceOf('Purl\Query', $url->query);
+        $this->assertEquals('param1=value1', $url->getQuery());
+        $this->assertEquals(array('param1' => 'value1'), $url->getQuery()->getData());
+    }
+
     public function testSetFragment()
     {
         $url = new Url('http://jwage.com');
         $url->fragment->path = 'about';
         $url->fragment->query->set('param1', 'value1');
         $this->assertEquals('http://jwage.com/#about?param1=value1', (string) $url);
+    }
+
+    public function testGetFragment()
+    {
+        $url = new Url('http://jwage.com');
+        $url->fragment->path = 'about';
+        $url->fragment->query->set('param1', 'value1');
+        $this->assertEquals('about?param1=value1', (string) $url->getFragment());
     }
 
     public function testGetNetloc()

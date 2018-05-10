@@ -2,10 +2,10 @@
 
 namespace Purl\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Purl\Url;
 
-class PublicSuffixListTest extends PHPUnit_Framework_TestCase
+class PublicSuffixListTest extends TestCase
 {
     /**
      * @dataProvider parseDataProvider
