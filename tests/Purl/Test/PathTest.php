@@ -2,10 +2,10 @@
 
 namespace Purl\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Purl\Path;
 
-class PathTest extends PHPUnit_Framework_TestCase
+class PathTest extends TestCase
 {
     public function testConstruct()
     {

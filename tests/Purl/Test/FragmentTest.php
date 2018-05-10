@@ -2,12 +2,12 @@
 
 namespace Purl\Test;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Purl\Fragment;
 use Purl\Path;
 use Purl\Query;
 
-class FragmentTest extends PHPUnit_Framework_TestCase
+class FragmentTest extends TestCase
 {
     public function testConstruct()
     {
@@ -60,5 +60,56 @@ class FragmentTest extends PHPUnit_Framework_TestCase
     {
         $fragment = new Fragment('test?param=value');
         $this->assertEquals('test?param=value', (string) $fragment);
+    }
+
+    public function testIsInitialized()
+    {
+        $fragment = new Fragment('test?param=value');
+        $this->assertFalse($fragment->isInitialized());
+    }
+
+    public function testHas()
+    {
+        $fragment = new Fragment('test?param=value');
+        $fragment->setData(array('param' => 'value'));
+        $this->assertTrue($fragment->has('param'));
+    }
+
+    public function testRemove()
+    {
+        $fragment = new Fragment('test?param=value');
+        $fragment->setData(array('param' => 'value'));
+        $fragment->remove('param');
+        $this->assertFalse($fragment->has('param'));
+    }
+
+    public function testIsset()
+    {
+        $fragment = new Fragment('test?param=value');
+        $fragment->setData(array('param' => 'value'));
+        $fragment->remove('param');
+        $this->assertFalse($fragment->has('param'));    
+    }
+
+    public function testOffsetExists()
+    {
+        $fragment = new Fragment('test?param=value');
+        $fragment->setData(array('param' => 'value'));
+        $this->assertTrue($fragment->offsetExists('param'));
+    }
+
+    public function testOffsetGet()
+    {
+        $fragment = new Fragment('test?param=value');
+        $fragment->setData(array('param' => 'value'));
+        $this->assertEquals('value', $fragment->offsetGet('param'));
+    }
+
+    public function testOffsetUnset()
+    {
+        $fragment = new Fragment('test?param=value');
+        $fragment->setData(array('param' => 'value'));
+        $fragment->offsetUnset('param');
+        $this->assertFalse($fragment->offsetExists('param'));
     }
 }
