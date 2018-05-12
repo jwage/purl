@@ -196,6 +196,10 @@ class Url extends AbstractPart
         $this->initialize();
         $parts = $this->getParser()->parseUrl($url);
 
+        if ($this->data['scheme'] !== null) {
+            $parts['scheme'] = $this->data['scheme'];
+        }
+
         foreach ($parts as $key => $value) {
             if ($value !== null) {
                 $this->data[$key] = $value;
