@@ -130,6 +130,12 @@ class UrlTest extends TestCase
         $this->assertEquals('http://jwage.com/#about?param1=value1', (string) $url);
     }
 
+    public function testProtocolRelativeUrl()
+    {
+        $url = new Url('https://example.com');
+        $this->assertEquals('https', $url->join('//code.jquery.com/jquery-3.10.js')->scheme);
+    }
+
     public function testGetFragment()
     {
         $url = new Url('http://jwage.com');
