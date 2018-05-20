@@ -8,7 +8,6 @@ Purl is a simple Object Oriented URL manipulation library for PHP 5.3+
 [![Code Coverage](https://scrutinizer-ci.com/g/jwage/purl/badges/coverage.png?s=a02332bc4d6a32df3171f2ba714e4583a70c0154)](https://scrutinizer-ci.com/g/jwage/purl/)
 [![Latest Stable Version](https://poser.pugx.org/jwage/purl/v/stable.png)](https://packagist.org/packages/jwage/purl)
 [![Total Downloads](https://poser.pugx.org/jwage/purl/downloads.png)](https://packagist.org/packages/jwage/purl)
-[![Dependency Status](https://www.versioneye.com/php/jwage:purl/1.0.0/badge.png)](https://www.versioneye.com/php/jwage:purl/1.0.0)
 
 ## Installation
 
@@ -120,7 +119,7 @@ echo $url->canonical; // com.jwage.about/
 #### Staying Up To Date
 
 The list of domains used to parse a URL into its component parts is updated from time to time.
-To ensure that you have the latest copy of the public suffix list, you can refresh 
+To ensure that you have the latest copy of the public suffix list, you can refresh
 the local copy of the list by running `./vendor/bin/pdp-psl data`
 
 ### Extract URLs
