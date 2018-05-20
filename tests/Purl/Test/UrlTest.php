@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purl\Test;
 
 use PHPUnit\Framework\TestCase;
 use Purl\Fragment;
-use Purl\Parser;
 use Purl\ParserInterface;
 use Purl\Path;
 use Purl\Query;
 use Purl\Url;
+use function count;
 
 class UrlTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct() : void
     {
         $url = new Url();
         $url->setUrl('http://jwage.com');
@@ -20,19 +22,19 @@ class UrlTest extends TestCase
         $this->assertInstanceOf('Purl\Parser', $url->getParser());
 
         $parser = new TestParser();
-        $url = new Url('http://jwage.com', $parser);
+        $url    = new Url('http://jwage.com', $parser);
         $this->assertSame($parser, $url->getParser());
     }
 
-    public function testSetParser()
+    public function testSetParser() : void
     {
         $parser = new TestParser();
-        $url = new Url();
+        $url    = new Url();
         $url->setParser($parser);
         $this->assertSame($parser, $url->getParser());
     }
 
-    public function testParseSanity()
+    public function testParseSanity() : void
     {
         $url = new Url('https://host.com:443/path with spaces?param1 with spaces=value1 with spaces&param2=value2#fragment1/fragment2 with spaces?param1=value1&param2 with spaces=value2 with spaces');
         $this->assertEquals('https', $url->scheme);
@@ -50,14 +52,14 @@ class UrlTest extends TestCase
         $this->assertEquals('fragment1/fragment2%20with%20spaces', (string) $url->fragment->path);
     }
 
-    public function testParseStaticMethod()
+    public function testParseStaticMethod() : void
     {
         $url = Url::parse('http://google.com');
         $this->assertInstanceOf('Purl\Url', $url);
         $this->assertEquals('http://google.com/', (string) $url);
     }
 
-    public function testBuild()
+    public function testBuild() : void
     {
         $url = Url::parse('http://jwage.com')
             ->set('port', '443')
@@ -80,7 +82,7 @@ class UrlTest extends TestCase
         $this->assertEquals('https://jwage.com:443/about/me?param1=value1&param2=value2#/fragment1/fragment2?param1=value1&param2=value2', (string) $url);
     }
 
-    public function testJoin()
+    public function testJoin() : void
     {
         $url = new Url('http://jwage.com/about?param=value#fragment');
         $this->assertEquals('http://jwage.com/about?param=value#fragment', (string) $url);
@@ -88,75 +90,75 @@ class UrlTest extends TestCase
         $this->assertEquals('http://about.me/jwage?param=value#fragment', (string) $url);
     }
 
-    public function testSetPath()
+    public function testSetPath() : void
     {
-        $url = new Url('http://jwage.com');
+        $url       = new Url('http://jwage.com');
         $url->path = 'about';
         $this->assertInstanceOf('Purl\Path', $url->path);
         $this->assertEquals('about', (string) $url->path);
     }
 
-    public function testGetPath()
+    public function testGetPath() : void
     {
-        $url = new Url('http://jwage.com');
+        $url       = new Url('http://jwage.com');
         $url->path = 'about';
         $this->assertInstanceOf('Purl\Path', $url->path);
-        $this->assertEquals('about', (string) $url->getPath());    
+        $this->assertEquals('about', (string) $url->getPath());
     }
 
-    public function testSetQuery()
+    public function testSetQuery() : void
     {
         $url = new Url('http://jwage.com');
         $url->query->set('param1', 'value1');
         $this->assertInstanceOf('Purl\Query', $url->query);
         $this->assertEquals('param1=value1', (string) $url->query);
-        $this->assertEquals(array('param1' => 'value1'), $url->query->getData());
+        $this->assertEquals(['param1' => 'value1'], $url->query->getData());
     }
 
-    public function testGetQuery()
+    public function testGetQuery() : void
     {
         $url = new Url('http://jwage.com');
         $url->query->set('param1', 'value1');
         $this->assertInstanceOf('Purl\Query', $url->query);
         $this->assertEquals('param1=value1', $url->getQuery());
-        $this->assertEquals(array('param1' => 'value1'), $url->getQuery()->getData());
+        $this->assertEquals(['param1' => 'value1'], $url->getQuery()->getData());
     }
 
-    public function testSetFragment()
+    public function testSetFragment() : void
     {
-        $url = new Url('http://jwage.com');
+        $url                 = new Url('http://jwage.com');
         $url->fragment->path = 'about';
         $url->fragment->query->set('param1', 'value1');
         $this->assertEquals('http://jwage.com/#about?param1=value1', (string) $url);
     }
 
-    public function testProtocolRelativeUrl()
+    public function testProtocolRelativeUrl() : void
     {
         $url = new Url('https://example.com');
         $this->assertEquals('https', $url->join('//code.jquery.com/jquery-3.10.js')->scheme);
     }
 
-    public function testGetFragment()
+    public function testGetFragment() : void
     {
-        $url = new Url('http://jwage.com');
+        $url                 = new Url('http://jwage.com');
         $url->fragment->path = 'about';
         $url->fragment->query->set('param1', 'value1');
         $this->assertEquals('about?param1=value1', (string) $url->getFragment());
     }
 
-    public function testGetNetloc()
+    public function testGetNetloc() : void
     {
         $url = new Url('https://user:pass@jwage.com:443');
         $this->assertEquals('user:pass@jwage.com:443', $url->getNetloc());
     }
 
-    public function testGetUrl()
+    public function testGetUrl() : void
     {
         $url = new Url('http://jwage.com');
         $this->assertEquals('http://jwage.com/', $url->getUrl());
     }
 
-    public function testSetUrl()
+    public function testSetUrl() : void
     {
         $url = new Url('http://jwage.com');
         $this->assertEquals('http://jwage.com/', $url->getUrl());
@@ -164,14 +166,14 @@ class UrlTest extends TestCase
         $this->assertEquals('http://google.com/', $url->getUrl());
     }
 
-    public function testArrayAccess()
+    public function testArrayAccess() : void
     {
-        $url = new Url('http://jwage.com');
+        $url         = new Url('http://jwage.com');
         $url['path'] = 'about';
         $this->assertEquals('http://jwage.com/about', (string) $url);
     }
 
-    public function testCanonicalization()
+    public function testCanonicalization() : void
     {
         $url = new Url('http://jwage.com');
         $this->assertEquals('com', $url->publicSuffix);
@@ -191,7 +193,7 @@ class UrlTest extends TestCase
         $this->assertEquals('uk.co.jwage.domain.sub/index.php?param1=value1', $url->canonical);
     }
 
-    public function testPath()
+    public function testPath() : void
     {
         $url = new Url('http://jwage.com');
         $url->path->add('about')->add('me');
@@ -200,9 +202,9 @@ class UrlTest extends TestCase
         $this->assertEquals('http://jwage.com/new/path', (string) $url);
     }
 
-    public function testFragment()
+    public function testFragment() : void
     {
-        $url = new Url('http://jwage.com');
+        $url           = new Url('http://jwage.com');
         $url->fragment = 'test';
         $url->fragment->path->add('about')->add('me');
         $url->fragment->query->set('param1', 'value1');
@@ -213,16 +215,16 @@ class UrlTest extends TestCase
         $this->assertEquals('param1=value1', (string) $url->fragment->query);
     }
 
-    public function testQuery()
+    public function testQuery() : void
     {
-        $url = new Url('http://jwage.com');
+        $url        = new Url('http://jwage.com');
         $url->query = 'param1=value1&param2=value2';
-        $this->assertEquals(array('param1' => 'value1', 'param2' => 'value2'), $url->query->getData());
+        $this->assertEquals(['param1' => 'value1', 'param2' => 'value2'], $url->query->getData());
         $url->query->set('param3', 'value3');
         $this->assertEquals('param1=value1&param2=value2&param3=value3', (string) $url->query);
     }
 
-    public function testIsAbsolute()
+    public function testIsAbsolute() : void
     {
         $url1 = new Url('http://jwage.com');
         $this->assertTrue($url1->isAbsolute());
@@ -231,20 +233,20 @@ class UrlTest extends TestCase
         $this->assertFalse($url2->isAbsolute());
     }
 
-    public function testGetResource()
+    public function testGetResource() : void
     {
         $url = new Url('http://jwage.com/about?query=value');
         $this->assertEquals('/about?query=value', $url->resource);
     }
 
-    public function testPort()
+    public function testPort() : void
     {
         $url = new Url('http://jwage.com:443');
         $this->assertEquals('443', $url->port);
         $this->assertEquals('http://jwage.com:443/', (string) $url);
     }
 
-    public function testAuth()
+    public function testAuth() : void
     {
         $url = new Url('http://user:pass@jwage.com');
         $this->assertEquals('user', $url->user);
@@ -262,7 +264,7 @@ class UrlTest extends TestCase
         $this->assertEquals('http://user@jwage.com/', (string) $url);
     }
 
-    public function testExtract()
+    public function testExtract() : void
     {
         $urls = Url::extract("test\nmore test https://google.com ftp://jwage.com ftps://jwage.com http://google.com\ntesting this out http://jwage.com more text https://we-are-a-professional-studio-of.photography");
         $this->assertEquals(6, count($urls));
@@ -274,7 +276,7 @@ class UrlTest extends TestCase
         $this->assertEquals('https://we-are-a-professional-studio-of.photography/', (string) $urls[5]);
     }
 
-    public function testManualObjectConstruction()
+    public function testManualObjectConstruction() : void
     {
         $url = new Url('http://jwage.com');
         $url->set('path', new Path('about'));
@@ -283,7 +285,7 @@ class UrlTest extends TestCase
         $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
     }
 
-    public function testIdeGettersAndSetters()
+    public function testIdeGettersAndSetters() : void
     {
         $url = new Url('http://jwage.com');
         $url->setPath(new Path('about'));
@@ -292,8 +294,9 @@ class UrlTest extends TestCase
         $this->assertEquals('http://jwage.com/about?param=value#about?param=value', (string) $url);
     }
 
-    public function testFromCurrentServerVariables() {
-        $_SERVER['HTTP_HOST'] = 'jwage.com';
+    public function testFromCurrentServerVariables() : void
+    {
+        $_SERVER['HTTP_HOST']   = 'jwage.com';
         $_SERVER['SERVER_PORT'] = 80;
         $_SERVER['REQUEST_URI'] = '/about';
 
@@ -305,7 +308,7 @@ class UrlTest extends TestCase
         $url = Url::fromCurrent();
         $this->assertEquals('http://jwage.com/about?param=value', (string) $url);
 
-        $_SERVER['HTTPS'] = 'off';
+        $_SERVER['HTTPS']     = 'off';
         $_SERVER['HTTP_HOST'] = 'jwage.com';
         unset($_SERVER['SERVER_PORT']);
         unset($_SERVER['REQUEST_URI']);
@@ -313,8 +316,8 @@ class UrlTest extends TestCase
         $url = Url::fromCurrent();
         $this->assertEquals('http://jwage.com/', (string) $url);
 
-        $_SERVER['HTTPS'] = 'on';
-        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['HTTPS']       = 'on';
+        $_SERVER['HTTP_HOST']   = 'jwage.com';
         $_SERVER['SERVER_PORT'] = 443;
         unset($_SERVER['REQUEST_URI']);
 
@@ -322,7 +325,7 @@ class UrlTest extends TestCase
         $this->assertEquals('https://jwage.com/', (string) $url);
 
         unset($_SERVER['HTTPS']);
-        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['HTTP_HOST']   = 'jwage.com';
         $_SERVER['SERVER_PORT'] = 8080;
         unset($_SERVER['REQUEST_URI']);
 
@@ -330,43 +333,47 @@ class UrlTest extends TestCase
         $this->assertEquals('http://jwage.com:8080/', (string) $url);
 
         unset($_SERVER['HTTPS']);
-        $_SERVER['HTTP_HOST'] = 'jwage.com';
+        $_SERVER['HTTP_HOST']   = 'jwage.com';
         $_SERVER['SERVER_PORT'] = 80;
         unset($_SERVER['REQUEST_URI']);
         $_SERVER['PHP_AUTH_USER'] = 'user';
-        $_SERVER['PHP_AUTH_PW'] = 'passwd123';
+        $_SERVER['PHP_AUTH_PW']   = 'passwd123';
 
         $url = Url::fromCurrent();
         $this->assertEquals('http://user:passwd123@jwage.com/', (string) $url);
     }
-    
-    public function testRelativeUrl() 
+
+    public function testRelativeUrl() : void
     {
         // test all resource parts
         $url = new Url('/path1/path2?x=1&y=2#frag');
-        $this->assertFalse($url->isAbsolute());        
-        $this->assertEquals('/path1/path2?x=1&y=2#frag', (string)$url);
-        
-        // test base path        
-        $url = new Url('/path1');        
-        $this->assertEquals('/path1', (string)$url);
-        
+        $this->assertFalse($url->isAbsolute());
+        $this->assertEquals('/path1/path2?x=1&y=2#frag', (string) $url);
+
+        // test base path
+        $url = new Url('/path1');
+        $this->assertEquals('/path1', (string) $url);
+
         // test minimal path
-        $url = new Url('/');       
-        $this->assertEquals('/', (string)$url);
-        
+        $url = new Url('/');
+        $this->assertEquals('/', (string) $url);
+
         // test feature request
         $url = new Url('/events');
         $url->query->set('param1', 'value1');
-        $this->assertEquals('/events?param1=value1', (string)$url);
-       
+        $this->assertEquals('/events?param1=value1', (string) $url);
     }
 }
 
 class TestParser implements ParserInterface
 {
-    public function parseUrl($url)
+    /**
+     * @param string|Url|null $url
+     *
+     * @return mixed[]
+     */
+    public function parseUrl($url) : array
     {
-        return $url;
+        return [];
     }
 }
