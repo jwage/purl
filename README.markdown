@@ -1,7 +1,7 @@
 Purl
 ====
 
-Purl is a simple Object Oriented URL manipulation library for PHP 5.3+
+Purl is a simple Object Oriented URL manipulation library for PHP 7.1+
 
 [![Build Status](https://secure.travis-ci.org/jwage/purl.png?branch=master)](http://travis-ci.org/jwage/purl)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/jwage/purl/badges/quality-score.png?s=7e0e1d4b5d7f6be61a3cd804dba556a0e4d1141d)](https://scrutinizer-ci.com/g/jwage/purl/)
@@ -37,13 +37,13 @@ One benefit of using this method is you can chain methods together after creatin
 
 ```php
 $url = \Purl\Url::parse('http://jwage.com')
-	->set('scheme', 'https')
-	->set('port', '443')
-	->set('user', 'jwage')
-	->set('pass', 'password')
-	->set('path', 'about/me')
-	->set('query', 'param1=value1&param2=value2')
-	->set('fragment', 'about/me?param1=value1&param2=value2');
+    ->set('scheme', 'https')
+    ->set('port', '443')
+    ->set('user', 'jwage')
+    ->set('pass', 'password')
+    ->set('path', 'about/me')
+    ->set('query', 'param1=value1&param2=value2')
+    ->set('fragment', 'about/me?param1=value1&param2=value2');
 
 echo $url->getUrl(); // https://jwage:password@jwage.com:443/about/me?param1=value1&param2=value2#about/me?param1=value1&param2=value2
 
@@ -79,8 +79,8 @@ echo $url; // http://jwage.com?param1=value1&param2=value2
 
 // set the query data from an array
 $url->query->setData(array(
-	'param1' => 'value1',
-	'param2' => 'value2'
+    'param1' => 'value1',
+    'param2' => 'value2'
 ));
 
 // set the query data from a string
