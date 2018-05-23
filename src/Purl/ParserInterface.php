@@ -1,27 +1,15 @@
 <?php
 
-/**
- * This file is part of the Purl package, a project by Jonathan H. Wage.
- *
- * (c) 2013 Jonathan H. Wage
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+declare(strict_types=1);
 
 namespace Purl;
 
-/**
- * Parser interface.
- *
- * @author      Jonathan H. Wage <jonwage@gmail.com>
- */
 interface ParserInterface
 {
     /**
-     * @param string|\Purl\Url $url
+     * @param string|Url|null $url
      *
-     * @return array $parsedUrl
+     * @return mixed[]
      */
-    public function parseUrl($url);
+    public function parseUrl($url) : array;
 }

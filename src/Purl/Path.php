@@ -1,86 +1,60 @@
 <?php
 
-/*
- * This file is part of the Purl package, a project by Jonathan H. Wage.
- *
- * (c) 2013 Jonathan H. Wage
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+declare(strict_types=1);
 
 namespace Purl;
 
+use function array_map;
+use function explode;
+use function implode;
+use function str_replace;
+
 /**
  * Path represents the part of a Url after the domain suffix and before the hashmark (#).
- *
- * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
 class Path extends AbstractPart
 {
-    /**
-     * @var string The original path string.
-     */
+    /** @var string|null The original path string. */
     private $path;
 
-    /**
-     * Construct a new Path instance.
-     *
-     * @param string $path
-     */
-    public function __construct($path = null)
+    public function __construct(?string $path = null)
     {
         $this->path = $path;
     }
 
-    /**
-     * Builds a string path from this Path instance internal data and returns it.
-     *
-     * @return string
-     */
-    public function getPath()
+    public function getPath() : string
     {
         $this->initialize();
-        return implode('/', array_map(function($value) {
+
+        return implode('/', array_map(function ($value) {
             return str_replace(' ', '%20', $value);
         }, $this->data));
     }
 
-    /**
-     * Set the string path for this Path instance and sets initialized to false.
-     *
-     * @param string
-     */
-    public function setPath($path)
+    public function setPath(string $path) : void
     {
         $this->initialized = false;
-        $this->path = $path;
+        $this->path        = $path;
     }
 
+
     /**
-     * Get the array of segments that make up the path.
-     *
-     * @return array
+     * @return mixed[]
      */
-    public function getSegments()
+    public function getSegments() : array
     {
         $this->initialize();
+
         return $this->data;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->getPath();
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function doInitialize()
+    protected function doInitialize() : void
     {
-        $this->data = explode('/', $this->path);
+        $this->data = explode('/', (string) $this->path);
     }
 }
