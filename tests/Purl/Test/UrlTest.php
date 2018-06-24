@@ -362,6 +362,10 @@ class UrlTest extends TestCase
         $url = new Url('/events');
         $url->query->set('param1', 'value1');
         $this->assertEquals('/events?param1=value1', (string) $url);
+
+        // test fragment with colon
+        $url = new Url('http://example.com/#hello:123');
+        $this->assertEquals('http://example.com/', (string) $url);
     }
 }
 
