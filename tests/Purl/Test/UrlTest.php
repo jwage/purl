@@ -365,7 +365,7 @@ class UrlTest extends TestCase
 
         // test fragment with colon
         $url = new Url('http://example.com/#hello:123');
-        $this->assertEquals('http://example.com/', (string) $url);
+        $this->assertEquals('http://example.com/#hello:123', (string) $url);
     }
 }
 
