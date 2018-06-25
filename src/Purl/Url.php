@@ -92,14 +92,14 @@ class Url extends AbstractPart
 
     public static function fromCurrent() : Url
     {
-        $scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443) ? 'https' : 'http';
+        $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443) ? 'https' : 'http';
 
         $host    = $_SERVER['HTTP_HOST'];
         $baseUrl = sprintf('%s://%s', $scheme, $host);
 
         $url = new self($baseUrl);
 
-        if (! empty($_SERVER['REQUEST_URI'])) {
+        if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI']) {
             if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
                 list($path, $query) = explode('?', $_SERVER['REQUEST_URI'], 2);
             } else {
@@ -112,7 +112,7 @@ class Url extends AbstractPart
         }
 
         // Only set port if different from default (80 or 443)
-        if (! empty($_SERVER['SERVER_PORT'])) {
+        if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']) {
             $port = $_SERVER['SERVER_PORT'];
             if (($scheme === 'http' && $port !== 80) ||
                 ($scheme === 'https' && $port !== 443)) {
@@ -121,9 +121,9 @@ class Url extends AbstractPart
         }
 
         // Authentication
-        if (! empty($_SERVER['PHP_AUTH_USER'])) {
+        if (isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER']) {
             $url->set('user', $_SERVER['PHP_AUTH_USER']);
-            if (! empty($_SERVER['PHP_AUTH_PW'])) {
+            if (isset($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_PW']) {
                 $url->set('pass', $_SERVER['PHP_AUTH_PW']);
             }
         }
@@ -312,9 +312,9 @@ class Url extends AbstractPart
 
         return sprintf(
             '/%s%s%s',
-            $parts['path'] ? $parts['path'] : '',
-            $parts['query'] ? '?' . $parts['query'] : '',
-            $parts['fragment'] ? '#' . $parts['fragment'] : ''
+            $parts['path'],
+            $parts['query'] !== '' ? '?' . $parts['query'] : '',
+            $parts['fragment'] !== '' ? '#' . $parts['fragment'] : ''
         );
     }
 

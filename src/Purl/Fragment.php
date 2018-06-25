@@ -61,7 +61,11 @@ class Fragment extends AbstractPart
     {
         $this->initialize();
 
-        return sprintf('%s%s', $this->path, (string) $this->query !== '' ? '?' . (string) $this->query : '');
+        return sprintf(
+            '%s%s',
+            (string) $this->path,
+            (string) $this->query !== '' ? '?' . (string) $this->query : ''
+        );
     }
 
     public function setFragment(string $fragment) : AbstractPart
