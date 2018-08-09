@@ -18,7 +18,7 @@ class ParserTest extends TestCase
     protected function setUp() : void
     {
         parent::setUp();
-        $pslManager   = new PublicSuffixListManager(dirname(dirname(dirname(__DIR__))) . '/data');
+        $pslManager   = new PublicSuffixListManager(dirname(__DIR__, 2)) . '/data');
         $pslParser    = new PslParser($pslManager->getList());
         $this->parser = new Parser($pslParser);
     }
