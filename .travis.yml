@@ -47,10 +47,10 @@ jobs:
 
     - stage: Code Quality
       env: CODING_STANDARDS
-      install: travis_retry composer install --prefer-dist
+      install: travis_retry composer install --no-interaction --prefer-dist
       script: ./vendor/bin/phpcs
 
     - stage: Code Quality
       env: STATIC_ANALYSIS
-      install: travis_retry composer install --prefer-dist
+      install: travis_retry composer install --no-interaction --prefer-dist
       script: vendor/bin/phpstan analyse
