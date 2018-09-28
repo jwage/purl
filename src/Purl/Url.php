@@ -92,7 +92,7 @@ class Url extends AbstractPart
 
     public static function fromCurrent() : Url
     {
-        $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443) ? 'https' : 'http';
+        $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443 ? 'https' : 'http';
 
         $host    = $_SERVER['HTTP_HOST'];
         $baseUrl = sprintf('%s://%s', $scheme, $host);
@@ -101,7 +101,7 @@ class Url extends AbstractPart
 
         if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI']) {
             if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
-                list($path, $query) = explode('?', $_SERVER['REQUEST_URI'], 2);
+                [$path, $query] = explode('?', $_SERVER['REQUEST_URI'], 2);
             } else {
                 $path  = $_SERVER['REQUEST_URI'];
                 $query = '';
