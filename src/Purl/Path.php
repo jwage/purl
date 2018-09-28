@@ -26,7 +26,7 @@ class Path extends AbstractPart
     {
         $this->initialize();
 
-        return implode('/', array_map(function ($value) {
+        return implode('/', array_map(static function ($value) {
             return str_replace(' ', '%20', $value);
         }, $this->data));
     }

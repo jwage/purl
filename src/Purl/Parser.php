@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Purl;
 
+use InvalidArgumentException;
 use Pdp\Parser as PslParser;
 use function array_merge;
 use function array_reverse;
@@ -55,7 +56,7 @@ class Parser implements ParserInterface
         $parsedUrl = $this->doParseUrl($url);
 
         if ($parsedUrl === []) {
-            throw new \InvalidArgumentException(sprintf('Invalid url %s', $url));
+            throw new InvalidArgumentException(sprintf('Invalid url %s', $url));
         }
 
         $parsedUrl = array_merge(self::$defaultParts, $parsedUrl);
