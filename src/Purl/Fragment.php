@@ -7,6 +7,8 @@ namespace Purl;
 use function array_merge;
 use function parse_url;
 use function sprintf;
+use function strpos;
+use function substr;
 
 /**
  * Fragment represents the part of a Url after the hashmark (#).
@@ -113,7 +115,17 @@ class Fragment extends AbstractPart
     protected function doInitialize() : void
     {
         if ($this->fragment !== null) {
-            $this->data = array_merge($this->data, parse_url($this->fragment));
+            $pos   = strpos($this->fragment, ':', 1);
+            $colon = '';
+            if ($pos !== false) {
+                $colon = substr($this->fragment, $pos);
+            }
+            $data = parse_url($this->fragment);
+            if ($colon !== '') {
+                $data = ['path' => $this->fragment];
+            }
+
+            $this->data = array_merge($this->data, $data);
         }
 
         foreach ($this->data as $key => $value) {
