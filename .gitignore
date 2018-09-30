@@ -1,5 +1,5 @@
-vendor
-data/public-suffix-list.txt
-phpunit.xml
-.phpcs-cache
-
+/data/public-suffix-list.txt
+/phpstan.neon
+/phpunit.xml
+/.phpcs-cache
+/vendor
