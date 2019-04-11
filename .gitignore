@@ -3,3 +3,5 @@
 /phpunit.xml
 /.phpcs-cache
 /vendor
+/.phpunit.result.cache
+

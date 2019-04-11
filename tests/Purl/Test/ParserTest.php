@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Purl\Test;
 
+use InvalidArgumentException;
 use Pdp\Parser as PslParser;
 use Pdp\PublicSuffixListManager;
 use PHPUnit\Framework\TestCase;
@@ -49,12 +50,11 @@ class ParserTest extends TestCase
         ], $parts);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid url http:///example.com
-     */
     public function testParseBadUrlThrowsInvalidArgumentException() : void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid url http:///example.com');
+
         $this->parser->parseUrl('http:///example.com/one/two?one=two#value');
     }
 }
