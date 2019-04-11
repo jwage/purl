@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Purl;
 
 use function array_merge;
+use function is_array;
 use function parse_url;
 use function sprintf;
 
@@ -113,7 +114,11 @@ class Fragment extends AbstractPart
     protected function doInitialize() : void
     {
         if ($this->fragment !== null) {
-            $this->data = array_merge($this->data, parse_url($this->fragment));
+            $parsed = parse_url($this->fragment);
+
+            if (is_array($parsed)) {
+                $this->data = array_merge($this->data, $parsed);
+            }
         }
 
         foreach ($this->data as $key => $value) {

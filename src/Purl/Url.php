@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Purl;
 
-use Pdp\Parser as PslParser;
-use Pdp\PublicSuffixListManager;
 use function array_map;
-use function dirname;
 use function explode;
 use function ltrim;
 use function preg_match_all;
@@ -19,7 +16,7 @@ use function strpos;
  *
  * @property string $scheme
  * @property string $host
- * @property integer $port
+ * @property int $port
  * @property string $user
  * @property string $pass
  * @property Path|string $path
@@ -320,9 +317,6 @@ class Url extends AbstractPart
 
     private static function createDefaultParser() : Parser
     {
-        $pslManager = new PublicSuffixListManager(dirname(dirname(__DIR__)) . '/data');
-        $pslParser  = new PslParser($pslManager->getList());
-
-        return new Parser($pslParser);
+        return new Parser();
     }
 }
