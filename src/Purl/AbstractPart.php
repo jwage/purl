@@ -120,7 +120,7 @@ abstract class AbstractPart implements ArrayAccess
     }
 
     /**
-     * @param string $key
+     * @param mixed $key
      */
     public function offsetExists($key) : bool
     {
@@ -130,7 +130,7 @@ abstract class AbstractPart implements ArrayAccess
     }
 
     /**
-     * @param string $key
+     * @param mixed $key
      *
      * @return mixed
      */
@@ -140,8 +140,8 @@ abstract class AbstractPart implements ArrayAccess
     }
 
     /**
-     * @param string $key
-     * @param mixed  $value
+     * @param mixed $key
+     * @param mixed $value
      *
      * @return void
      */
@@ -151,7 +151,7 @@ abstract class AbstractPart implements ArrayAccess
     }
 
     /**
-     * @param string $key
+     * @param mixed $key
      *
      * @return void
      */

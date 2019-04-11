@@ -45,7 +45,7 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @param Url|string $url
+     * @param string|Url|null $url
      *
      * @return mixed[]
      */
