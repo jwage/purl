@@ -20,23 +20,19 @@ composer require jwage/purl
 Using Purl
 ----------
 
-Creating Url instances is easy.  You can specify the URL you want, or just use the current URL:
+Creating Url instances is easy. You can specify the URL you want, or just use the current URL:
 
 ```php
-$url = new \Purl\Url('http://jwage.com');
-$currentUrl = \Purl\Url::fromCurrent();
+use Purl\Url;
+
+$url = new Url('http://jwage.com');
+$currentUrl = Url::fromCurrent();
 ```
 
-You can also create `Url` instances through the static `parse` method if you prefer that style:
+You can chain methods together after creating the `Url` like this:
 
 ```php
-$url = \Purl\Url::parse('http://jwage.com');
-```
-
-One benefit of using this method is you can chain methods together after creating the `Url`:
-
-```php
-$url = \Purl\Url::parse('http://jwage.com')
+$url = (new Url('http://jwage.com'))
     ->set('scheme', 'https')
     ->set('port', '443')
     ->set('user', 'jwage')
@@ -55,7 +51,7 @@ echo $url->getUrl(); // https://jwage:password@jwage.com:443/about/me?param1=val
 ### Path Manipulation
 
 ```php
-$url = new \Purl\Url('http://jwage.com');
+$url = new Url('http://jwage.com');
 
 // add path segments one at a time
 $url->path->add('about')->add('me');
@@ -70,7 +66,7 @@ print_r($url->path->getData()); // array('about', 'me', 'another_segment')
 ### Query Manipulation
 
 ```php
-$url = new \Purl\Url('http://jwage.com');
+$url = new Url('http://jwage.com');
 $url->query->set('param1', 'value1');
 $url->query->set('param2', 'value2');
 
@@ -78,10 +74,10 @@ echo $url->query; // param1=value1&param2=value2
 echo $url; // http://jwage.com?param1=value1&param2=value2
 
 // set the query data from an array
-$url->query->setData(array(
+$url->query->setData([
     'param1' => 'value1',
     'param2' => 'value2'
-));
+]);
 
 // set the query data from a string
 $url->query = 'param1=value1&param2=value2'; // $url->query becomes instanceof Purl\Query
@@ -91,7 +87,7 @@ print_r($url->query->getData()); //array('param1' => 'value1', 'param2' => 'valu
 ### Fragment Manipulation
 
 ```php
-$url = new \Purl\Url('http://jwage.com');
+$url = new Url('http://jwage.com');
 $url->fragment = 'about/me?param1=value1&param2=value2'; // $url->fragment becomes instanceof Purl\Fragment
 ```
 
@@ -109,7 +105,7 @@ You can easily extract urls from a string of text using the `extract` method:
 
 ```php
 $string = 'some text http://google.com http://jwage.com';
-$urls = \Purl\Url::extract($string);
+$urls = Url::extract($string);
 
 echo $urls[0]; // http://google.com/
 echo $urls[1]; // http://jwage.com/
@@ -120,16 +116,18 @@ echo $urls[1]; // http://jwage.com/
 You can easily join two URLs together using Purl:
 
 ```php
-$url = new \Purl\Url('http://jwage.com/about?param=value#fragment');
+$url = new Url('http://jwage.com/about?param=value#fragment');
 $url->join('http://about.me/jwage');
+
 echo $url; // http://about.me/jwage?param=value#fragment
 ```
 
 Or if you have another `Url` object already:
 
 ```php
-$url1 = new \Purl\Url('http://jwage.com/about?param=value#fragment');
-$url2 = new \Purl\Url('http://about.me/jwage');
+$url1 = new Url('http://jwage.com/about?param=value#fragment');
+$url2 = new Url('http://about.me/jwage');
 $url1->join($url2);
+
 echo $url1; // http://about.me/jwage?param=value#fragment
 ```
