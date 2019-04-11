@@ -86,11 +86,13 @@ abstract class AbstractPart implements ArrayAccess
         return $this;
     }
 
-    public function remove(string $key) : void
+    public function remove(string $key) : AbstractPart
     {
         $this->initialize();
 
         unset($this->data[$key]);
+
+        return $this;
     }
 
     public function __isset(string $key) : bool
