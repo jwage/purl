@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Purl;
 
-use Pdp\Cache;
-use Pdp\CurlHttpClient;
-use Pdp\Manager;
-use Pdp\Rules;
 use function array_map;
-use function dirname;
 use function explode;
 use function ltrim;
 use function preg_match_all;

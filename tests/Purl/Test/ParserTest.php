@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Purl\Test;
 
 use InvalidArgumentException;
-use Pdp\Parser as PslParser;
-use Pdp\PublicSuffixListManager;
 use PHPUnit\Framework\TestCase;
 use Purl\Parser;
-use function dirname;
 
 class ParserTest extends TestCase
 {

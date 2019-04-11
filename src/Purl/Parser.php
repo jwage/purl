@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace Purl;
 
 use InvalidArgumentException;
-use Pdp\Parser as PslParser;
-use Pdp\Rules;
 use function array_merge;
 use function array_reverse;
 use function explode;
 use function implode;
 use function parse_url;
-use function preg_match;
 use function sprintf;
 
 /**
