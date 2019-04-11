@@ -19,9 +19,8 @@ class ParserTest extends TestCase
     protected function setUp() : void
     {
         parent::setUp();
-        $pslManager   = new PublicSuffixListManager(dirname(__DIR__, 3) . '/data');
-        $pslParser    = new PslParser($pslManager->getList());
-        $this->parser = new Parser($pslParser);
+
+        $this->parser = new Parser();
     }
 
     protected function tearDown() : void
@@ -42,9 +41,6 @@ class ParserTest extends TestCase
             'path' => '/about',
             'query' => 'param=value',
             'fragment' => 'fragment?param=value',
-            'publicSuffix' => 'com',
-            'registerableDomain' => 'jwage.com',
-            'subdomain' => 'sub.domain',
             'canonical' => 'com.jwage.domain.sub/about?param=value',
             'resource' => '/about?param=value',
         ], $parts);

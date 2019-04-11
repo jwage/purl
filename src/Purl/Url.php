@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Purl;
 
-use Pdp\Parser as PslParser;
-use Pdp\PublicSuffixListManager;
+use Pdp\Cache;
+use Pdp\CurlHttpClient;
+use Pdp\Manager;
+use Pdp\Rules;
 use function array_map;
 use function dirname;
 use function explode;
@@ -320,9 +322,6 @@ class Url extends AbstractPart
 
     private static function createDefaultParser() : Parser
     {
-        $pslManager = new PublicSuffixListManager(dirname(dirname(__DIR__)) . '/data');
-        $pslParser  = new PslParser($pslManager->getList());
-
-        return new Parser($pslParser);
+        return new Parser();
     }
 }

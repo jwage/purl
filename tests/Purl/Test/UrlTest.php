@@ -176,20 +176,12 @@ class UrlTest extends TestCase
     public function testCanonicalization() : void
     {
         $url = new Url('http://jwage.com');
-        $this->assertEquals('com', $url->publicSuffix);
-        $this->assertEquals('jwage.com', $url->registerableDomain);
         $this->assertEquals('com.jwage', $url->canonical);
 
         $url = new Url('http://sub.domain.jwage.com/index.php?param1=value1');
-        $this->assertEquals('com', $url->publicSuffix);
-        $this->assertEquals('jwage.com', $url->registerableDomain);
-        $this->assertEquals('sub.domain', $url->subdomain);
         $this->assertEquals('com.jwage.domain.sub/index.php?param1=value1', $url->canonical);
 
         $url = new Url('http://sub.domain.jwage.co.uk/index.php?param1=value1');
-        $this->assertEquals('co.uk', $url->publicSuffix);
-        $this->assertEquals('jwage.co.uk', $url->registerableDomain);
-        $this->assertEquals('sub.domain', $url->subdomain);
         $this->assertEquals('uk.co.jwage.domain.sub/index.php?param1=value1', $url->canonical);
     }
 

@@ -4,65 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "01edd1536ed980816f948644ab283ad4",
-    "packages": [
-        {
-            "name": "jeremykendall/php-domain-parser",
-            "version": "1.4.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jeremykendall/php-domain-parser.git",
-                "reference": "66379578432e85f764f4f9d587d61e48d66c2082"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jeremykendall/php-domain-parser/zipball/66379578432e85f764f4f9d587d61e48d66c2082",
-                "reference": "66379578432e85f764f4f9d587d61e48d66c2082",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-intl": "*",
-                "ext-mbstring": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "1.2.*",
-                "phpunit/phpunit": "4.*"
-            },
-            "bin": [
-                "bin/parse",
-                "bin/pdp-psl"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Pdp\\": "library/"
-                },
-                "files": [
-                    "library/mb-parse-url.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Kendall",
-                    "homepage": "http://about.me/jeremykendall",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Public Suffix List based URL parsing implemented in PHP.",
-            "keywords": [
-                "Public Suffix List",
-                "domain parsing",
-                "url parsing"
-            ],
-            "time": "2014-07-28T18:36:24+00:00"
-        }
-    ],
+    "content-hash": "ec5ff28414636ef69eec23290f154595",
+    "packages": [],
     "packages-dev": [
         {
             "name": "composer/xdebug-handler",
