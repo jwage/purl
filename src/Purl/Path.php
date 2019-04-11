@@ -37,7 +37,6 @@ class Path extends AbstractPart
         $this->path        = $path;
     }
 
-
     /**
      * @return mixed[]
      */

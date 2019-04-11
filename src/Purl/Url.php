@@ -19,7 +19,7 @@ use function strpos;
  *
  * @property string $scheme
  * @property string $host
- * @property integer $port
+ * @property int $port
  * @property string $user
  * @property string $pass
  * @property Path|string $path

@@ -20,7 +20,6 @@ class Query extends AbstractPart
         $this->query = $query;
     }
 
-
     public function getQuery() : string
     {
         $this->initialize();
