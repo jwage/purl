@@ -22,9 +22,6 @@ use function strpos;
  * @property Path|string $path
  * @property Query|string $query
  * @property Fragment|string $fragment
- * @property string $publicSuffix
- * @property string $registerableDomain
- * @property string $subdomain
  * @property string $canonical
  * @property string $resource
  */
