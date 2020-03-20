@@ -1,9 +1,9 @@
 {
-    "name": "jwage/purl",
+    "name": "msgframework/purl",
     "type": "library",
     "description": "URL Manipulation for PHP 5.3",
     "keywords": ["url", "manipulation"],
-    "homepage": "http://github.com/jwage/purl",
+    "homepage": "http://github.com/msgframework/purl",
     "license": "MIT",
     "authors": [
         {"name": "Jonathan H. Wage", "email": "jonwage@gmail.com"}
