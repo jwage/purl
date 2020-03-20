@@ -316,4 +316,33 @@ class Url extends AbstractPart
     {
         return new Parser();
     }
+
+    public function getScheme()
+    {
+        $this->initialize();
+
+        return $this->data['scheme'];
+    }
+
+    public function toString(array $needs = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'))
+    {
+        $this->initialize();
+        $parts = array();
+
+        foreach ($this->data as $part => $part_value)
+        {
+            $parts[$part] = in_array($part, $needs) ? strval($part_value) : '';
+        }
+
+        if (! $this->isAbsolute()) {
+            return self::httpBuildRelativeUrl($parts);
+        }
+
+        return self::httpBuildUrl($parts);
+    }
+
+    public function isSSL()
+    {
+        return $this->getScheme() == 'https' ? true : false;
+    }
 }
