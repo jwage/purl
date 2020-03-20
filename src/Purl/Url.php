@@ -227,11 +227,15 @@ class Url extends AbstractPart
         return ($this->user !== null && $this->pass !== null ? $this->user . ($this->pass !== null ? ':' . $this->pass : '') . '@' : '') . $this->host . ($this->port !== null ? ':' . $this->port : '');
     }
 
-    public function getUrl() : string
+    public function getUrl(array $needs = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment')) : string
     {
         $this->initialize();
+        $parts = array();
 
-        $parts = array_map('strval', $this->data);
+        foreach ($this->data as $part => $part_value)
+        {
+            $parts[$part] = in_array($part, $needs) ? strval($part_value) : '';
+        }
 
         if (! $this->isAbsolute()) {
             return self::httpBuildRelativeUrl($parts);
@@ -288,8 +292,9 @@ class Url extends AbstractPart
         $port = $parts['port'] !== '' ? sprintf(':%d', $parts['port']) : '';
 
         return sprintf(
-            '%s://%s%s%s%s',
+            '%s%s%s%s%s%s',
             $parts['scheme'],
+            ($pass || $auth || $parts['host'] || ($parts['scheme'] && ($parts['host'] || $auth))) ? '://' : '',
             $auth,
             $parts['host'],
             $port,
@@ -322,23 +327,6 @@ class Url extends AbstractPart
         $this->initialize();
 
         return $this->data['scheme'];
-    }
-
-    public function toString(array $needs = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'))
-    {
-        $this->initialize();
-        $parts = array();
-
-        foreach ($this->data as $part => $part_value)
-        {
-            $parts[$part] = in_array($part, $needs) ? strval($part_value) : '';
-        }
-
-        if (! $this->isAbsolute()) {
-            return self::httpBuildRelativeUrl($parts);
-        }
-
-        return self::httpBuildUrl($parts);
     }
 
     public function isSSL()
