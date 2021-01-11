@@ -111,9 +111,9 @@ abstract class AbstractPart implements ArrayAccess
     /**
      * @param mixed $value
      */
-    public function __set(string $key, $value) : AbstractPart
+    public function __set(string $key, $value) : void
     {
-        return $this->set($key, $value);
+        $this->set($key, $value);
     }
 
     public function __unset(string $key) : void
