@@ -30,11 +30,7 @@
         <exclude-pattern>src/Purl/AbstractPart.php</exclude-pattern>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint">
-        <exclude-pattern>src/Purl/AbstractPart.php</exclude-pattern>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingReturnTypeHint">
-        <exclude-pattern>src/Purl/AbstractPart.php</exclude-pattern>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+        <severity>0</severity>
     </rule>
 </ruleset>

@@ -13,20 +13,20 @@ class ParserTest extends TestCase
     /** @var Parser */
     private $parser;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->parser = new Parser();
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         $this->parser = null;
         parent::tearDown();
     }
 
-    public function testParseUrl() : void
+    public function testParseUrl(): void
     {
         $parts = $this->parser->parseUrl('https://sub.domain.jwage.com:443/about?param=value#fragment?param=value');
         $this->assertEquals([
@@ -43,7 +43,7 @@ class ParserTest extends TestCase
         ], $parts);
     }
 
-    public function testParseBadUrlThrowsInvalidArgumentException() : void
+    public function testParseBadUrlThrowsInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid url http:///example.com');

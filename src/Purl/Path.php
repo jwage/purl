@@ -22,7 +22,7 @@ class Path extends AbstractPart
         $this->path = $path;
     }
 
-    public function getPath() : string
+    public function getPath(): string
     {
         $this->initialize();
 
@@ -31,7 +31,7 @@ class Path extends AbstractPart
         }, $this->data));
     }
 
-    public function setPath(string $path) : void
+    public function setPath(string $path): void
     {
         $this->initialized = false;
         $this->path        = $path;
@@ -40,19 +40,19 @@ class Path extends AbstractPart
     /**
      * @return mixed[]
      */
-    public function getSegments() : array
+    public function getSegments(): array
     {
         $this->initialize();
 
         return $this->data;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getPath();
     }
 
-    protected function doInitialize() : void
+    protected function doInitialize(): void
     {
         $this->data = explode('/', (string) $this->path);
     }
