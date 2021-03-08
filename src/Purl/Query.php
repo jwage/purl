@@ -20,25 +20,25 @@ class Query extends AbstractPart
         $this->query = $query;
     }
 
-    public function getQuery() : string
+    public function getQuery(): string
     {
         $this->initialize();
 
         return http_build_query($this->data);
     }
 
-    public function setQuery(string $query) : void
+    public function setQuery(string $query): void
     {
         $this->initialized = false;
         $this->query       = $query;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getQuery();
     }
 
-    protected function doInitialize() : void
+    protected function doInitialize(): void
     {
         parse_str((string) $this->query, $data);
 

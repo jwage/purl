@@ -6,6 +6,7 @@ namespace Purl\Test;
 
 use PHPUnit\Framework\TestCase;
 use Purl\Url;
+
 use function floor;
 use function log;
 use function memory_get_usage;
@@ -14,7 +15,7 @@ use function round;
 
 class MemoryUsageTest extends TestCase
 {
-    public function testMemoryUsage() : void
+    public function testMemoryUsage(): void
     {
         $domains = [
             'http://google.de',
@@ -39,7 +40,7 @@ class MemoryUsageTest extends TestCase
         self::assertEquals($this->roundMemoryUsage($memoryStart), $this->roundMemoryUsage($memoryEnd));
     }
 
-    private function roundMemoryUsage(float $size) : float
+    private function roundMemoryUsage(float $size): float
     {
         return round($size / pow(1024, $i = floor(log($size, 1024))));
     }

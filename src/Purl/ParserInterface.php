@@ -11,5 +11,5 @@ interface ParserInterface
      *
      * @return mixed[]
      */
-    public function parseUrl($url) : array;
+    public function parseUrl($url): array;
 }

@@ -11,7 +11,7 @@ use Purl\Query;
 
 class FragmentTest extends TestCase
 {
-    public function testConstruct() : void
+    public function testConstruct(): void
     {
         $fragment = new Fragment('test?param=value');
         $this->assertInstanceOf('Purl\Path', $fragment->path);
@@ -26,13 +26,13 @@ class FragmentTest extends TestCase
         $this->assertEquals('param=value', (string) $fragment->query);
     }
 
-    public function testGetFragment() : void
+    public function testGetFragment(): void
     {
         $fragment = new Fragment('test?param=value');
         $this->assertEquals('test?param=value', $fragment->getFragment());
     }
 
-    public function testSetFragment() : void
+    public function testSetFragment(): void
     {
         $fragment = new Fragment('test?param=value');
         $this->assertEquals('test?param=value', $fragment->getFragment());
@@ -40,7 +40,7 @@ class FragmentTest extends TestCase
         $this->assertEquals('changed?param=value', $fragment->getFragment());
     }
 
-    public function testGetSetPath() : void
+    public function testGetSetPath(): void
     {
         $fragment = new Fragment();
         $path     = new Path('test');
@@ -49,7 +49,7 @@ class FragmentTest extends TestCase
         $this->assertEquals('test', (string) $fragment);
     }
 
-    public function testGetSetQuery() : void
+    public function testGetSetQuery(): void
     {
         $fragment = new Fragment();
         $query    = new Query('param=value');
@@ -58,26 +58,26 @@ class FragmentTest extends TestCase
         $this->assertEquals('?param=value', (string) $fragment);
     }
 
-    public function testToString() : void
+    public function testToString(): void
     {
         $fragment = new Fragment('test?param=value');
         $this->assertEquals('test?param=value', (string) $fragment);
     }
 
-    public function testIsInitialized() : void
+    public function testIsInitialized(): void
     {
         $fragment = new Fragment('test?param=value');
         $this->assertFalse($fragment->isInitialized());
     }
 
-    public function testHas() : void
+    public function testHas(): void
     {
         $fragment = new Fragment('test?param=value');
         $fragment->setData(['param' => 'value']);
         $this->assertTrue($fragment->has('param'));
     }
 
-    public function testRemove() : void
+    public function testRemove(): void
     {
         $fragment = new Fragment('test?param=value');
         $fragment->setData(['param' => 'value']);
@@ -85,7 +85,7 @@ class FragmentTest extends TestCase
         $this->assertFalse($fragment->has('param'));
     }
 
-    public function testIsset() : void
+    public function testIsset(): void
     {
         $fragment = new Fragment('test?param=value');
         $fragment->setData(['param' => 'value']);
@@ -93,21 +93,21 @@ class FragmentTest extends TestCase
         $this->assertFalse($fragment->has('param'));
     }
 
-    public function testOffsetExists() : void
+    public function testOffsetExists(): void
     {
         $fragment = new Fragment('test?param=value');
         $fragment->setData(['param' => 'value']);
         $this->assertTrue($fragment->offsetExists('param'));
     }
 
-    public function testOffsetGet() : void
+    public function testOffsetGet(): void
     {
         $fragment = new Fragment('test?param=value');
         $fragment->setData(['param' => 'value']);
         $this->assertEquals('value', $fragment->offsetGet('param'));
     }
 
-    public function testOffsetUnset() : void
+    public function testOffsetUnset(): void
     {
         $fragment = new Fragment('test?param=value');
         $fragment->setData(['param' => 'value']);

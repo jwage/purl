@@ -1,7 +1,7 @@
 {
     "name": "jwage/purl",
     "type": "library",
-    "description": "URL Manipulation for PHP 5.3",
+    "description": "URL Manipulation for PHP",
     "keywords": ["url", "manipulation"],
     "homepage": "http://github.com/jwage/purl",
     "license": "MIT",
@@ -18,12 +18,12 @@
         "sort-packages": true
     },
     "require": {
-        "php": "^7.2"
+        "php": ">=7.2"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^6.0",
-        "phpstan/phpstan": "^0.11.5",
-        "phpstan/phpstan-strict-rules": "^0.11.0",
+        "doctrine/coding-standard": "^8.0",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-strict-rules": "^0.12",
         "phpunit/phpunit": "^8.1"
     },
     "extra": {

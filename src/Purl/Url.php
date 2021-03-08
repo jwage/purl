@@ -63,7 +63,7 @@ class Url extends AbstractPart
         $this->parser = $parser;
     }
 
-    public static function parse(string $url) : Url
+    public static function parse(string $url): Url
     {
         return new self($url);
     }
@@ -71,7 +71,7 @@ class Url extends AbstractPart
     /**
      * @return Url[] $urls
      */
-    public static function extract(string $string) : array
+    public static function extract(string $string): array
     {
         $regex = '/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?/';
 
@@ -84,7 +84,7 @@ class Url extends AbstractPart
         return $urls;
     }
 
-    public static function fromCurrent() : Url
+    public static function fromCurrent(): Url
     {
         $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === 443 ? 'https' : 'http';
 
@@ -108,8 +108,10 @@ class Url extends AbstractPart
         // Only set port if different from default (80 or 443)
         if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']) {
             $port = $_SERVER['SERVER_PORT'];
-            if (($scheme === 'http' && $port !== 80) ||
-                ($scheme === 'https' && $port !== 443)) {
+            if (
+                ($scheme === 'http' && $port !== 80) ||
+                ($scheme === 'https' && $port !== 443)
+            ) {
                 $url->set('port', $port);
             }
         }
@@ -125,7 +127,7 @@ class Url extends AbstractPart
         return $url;
     }
 
-    public function getParser() : ParserInterface
+    public function getParser(): ParserInterface
     {
         if ($this->parser === null) {
             $this->parser = self::createDefaultParser();
@@ -134,7 +136,7 @@ class Url extends AbstractPart
         return $this->parser;
     }
 
-    public function setParser(ParserInterface $parser) : void
+    public function setParser(ParserInterface $parser): void
     {
         $this->parser = $parser;
     }
@@ -142,7 +144,7 @@ class Url extends AbstractPart
     /**
      * @param string|Url $url
      */
-    public function join($url) : Url
+    public function join($url): Url
     {
         $this->initialize();
         $parts = $this->getParser()->parseUrl($url);
@@ -169,7 +171,7 @@ class Url extends AbstractPart
     /**
      * @param mixed $value
      */
-    public function set(string $key, $value) : AbstractPart
+    public function set(string $key, $value): AbstractPart
     {
         $this->initialize();
 
@@ -178,56 +180,56 @@ class Url extends AbstractPart
         return $this;
     }
 
-    public function setPath(Path $path) : AbstractPart
+    public function setPath(Path $path): AbstractPart
     {
         $this->data['path'] = $path;
 
         return $this;
     }
 
-    public function getPath() : Path
+    public function getPath(): Path
     {
         $this->initialize();
 
         return $this->data['path'];
     }
 
-    public function setQuery(Query $query) : AbstractPart
+    public function setQuery(Query $query): AbstractPart
     {
         $this->data['query'] = $query;
 
         return $this;
     }
 
-    public function getQuery() : Query
+    public function getQuery(): Query
     {
         $this->initialize();
 
         return $this->data['query'];
     }
 
-    public function setFragment(Fragment $fragment) : AbstractPart
+    public function setFragment(Fragment $fragment): AbstractPart
     {
         $this->data['fragment'] = $fragment;
 
         return $this;
     }
 
-    public function getFragment() : Fragment
+    public function getFragment(): Fragment
     {
         $this->initialize();
 
         return $this->data['fragment'];
     }
 
-    public function getNetloc() : string
+    public function getNetloc(): string
     {
         $this->initialize();
 
         return ($this->user !== null && $this->pass !== null ? $this->user . ($this->pass !== null ? ':' . $this->pass : '') . '@' : '') . $this->host . ($this->port !== null ? ':' . $this->port : '');
     }
 
-    public function getUrl() : string
+    public function getUrl(): string
     {
         $this->initialize();
 
@@ -240,26 +242,26 @@ class Url extends AbstractPart
         return self::httpBuildUrl($parts);
     }
 
-    public function setUrl(string $url) : void
+    public function setUrl(string $url): void
     {
         $this->initialized = false;
         $this->data        = [];
         $this->url         = $url;
     }
 
-    public function isAbsolute() : bool
+    public function isAbsolute(): bool
     {
         $this->initialize();
 
         return $this->scheme !== null && $this->host !== null;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getUrl();
     }
 
-    protected function doInitialize() : void
+    protected function doInitialize(): void
     {
         $parts = $this->getParser()->parseUrl($this->url);
 
@@ -279,7 +281,7 @@ class Url extends AbstractPart
     /**
      * @param string[] $parts
      */
-    private static function httpBuildUrl(array $parts) : string
+    private static function httpBuildUrl(array $parts): string
     {
         $relative = self::httpBuildRelativeUrl($parts);
 
@@ -300,7 +302,7 @@ class Url extends AbstractPart
     /**
      * @param string[] $parts
      */
-    private static function httpBuildRelativeUrl(array $parts) : string
+    private static function httpBuildRelativeUrl(array $parts): string
     {
         $parts['path'] = ltrim($parts['path'], '/');
 
@@ -312,7 +314,7 @@ class Url extends AbstractPart
         );
     }
 
-    private static function createDefaultParser() : Parser
+    private static function createDefaultParser(): Parser
     {
         return new Parser();
     }

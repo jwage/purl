@@ -50,7 +50,7 @@ class Fragment extends AbstractPart
     /**
      * @param mixed $value
      */
-    public function set(string $key, $value) : AbstractPart
+    public function set(string $key, $value): AbstractPart
     {
         $this->initialize();
         $this->data[$key] = $this->preparePartValue($key, $value);
@@ -58,7 +58,7 @@ class Fragment extends AbstractPart
         return $this;
     }
 
-    public function getFragment() : string
+    public function getFragment(): string
     {
         $this->initialize();
 
@@ -69,7 +69,7 @@ class Fragment extends AbstractPart
         );
     }
 
-    public function setFragment(string $fragment) : AbstractPart
+    public function setFragment(string $fragment): AbstractPart
     {
         $this->initialized = false;
         $this->data        = [];
@@ -78,40 +78,40 @@ class Fragment extends AbstractPart
         return $this;
     }
 
-    public function setPath(Path $path) : AbstractPart
+    public function setPath(Path $path): AbstractPart
     {
         $this->data['path'] = $path;
 
         return $this;
     }
 
-    public function getPath() : Path
+    public function getPath(): Path
     {
         $this->initialize();
 
         return $this->data['path'];
     }
 
-    public function setQuery(Query $query) : AbstractPart
+    public function setQuery(Query $query): AbstractPart
     {
         $this->data['query'] = $query;
 
         return $this;
     }
 
-    public function getQuery() : Query
+    public function getQuery(): Query
     {
         $this->initialize();
 
         return $this->data['query'];
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getFragment();
     }
 
-    protected function doInitialize() : void
+    protected function doInitialize(): void
     {
         if ($this->fragment !== null) {
             $parsed = parse_url($this->fragment);

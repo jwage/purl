@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Purl;
 
 use InvalidArgumentException;
+
 use function array_merge;
 use function array_reverse;
 use function explode;
@@ -36,7 +37,7 @@ class Parser implements ParserInterface
      *
      * @return mixed[]
      */
-    public function parseUrl($url) : array
+    public function parseUrl($url): array
     {
         $url = (string) $url;
 
@@ -64,7 +65,7 @@ class Parser implements ParserInterface
     /**
      * @return mixed[]
      */
-    protected function doParseUrl(string $url) : array
+    protected function doParseUrl(string $url): array
     {
         $parsedUrl = parse_url($url);
 
